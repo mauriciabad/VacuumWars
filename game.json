@@ -7,7 +7,43 @@
       "angle": 21,
       "linearVelocity": 1,
       "angularVelocity": 1,
-      "size": 1
+      "size": 1,
+      "isMoving": false,
+      "isActing": false,
+      "type": "normal",
+      "powerUp": "turbo"
     }
+  },
+  "trashes": {
+    "21434":{
+      "x": 43,
+      "y": 24,
+      "type": "paper"
+    }
+  },
+  "trashTypes": {
+    "paper":{
+      "sizeX": 5,
+      "sizeY": 5,
+      "texture": "textures/trash/paper.png"
+    }
+  },
+  "vacuumTypes": {
+    "normal":{
+      "radius": 20,
+      "texture": "textures/vacuum/paper.png"
+    }
+  },
+  "powerUpTypes": [
+    "turbo"
+  ],
+  "config": {
+    "minTrash": 10
+  },
+  "map": {
+    "id": 1,
+    "name": "Dinning Room",
+    "width": 900,
+    "heigth": 400
   }
 }
