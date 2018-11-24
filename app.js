@@ -39,9 +39,7 @@ Aqui escriu el Mauri
 
 function sendGame(){
   io.emit('players', game.players);
-  io.emit('trashes',game.trashes)
-  console.log(game.trashes);
-  
+  io.emit('trashes',game.trashes)  
 }
 
 
@@ -143,7 +141,7 @@ function addTrash(toAdd) {
   while (toAdd--) {
       game.trashes.push({
         "x": Math.random()*game.map.width,
-        "y": Math.random()*game.map.height,
+        "y": Math.random()*game.map.heigth,
         "type": "paper"
       })
   }

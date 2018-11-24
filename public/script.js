@@ -32,7 +32,7 @@ window.onload = function() {
     trashes = newTrashes;
     for (const trash of trashes) {
       let i = trashesRaster.push(new paper.Raster(`textures/trash/${trash.type}.png`))  - 1;
-      trashesRaster[i].position = new paper.Point(40, trash.y);
+      trashesRaster[i].position = new paper.Point(trash.x, trash.y);
     }
   });
 
