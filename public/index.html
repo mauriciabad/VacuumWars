@@ -24,12 +24,18 @@
       border: solid 10px #b3aa7c;
       background-color: #cac6ad;
       border-radius: 10px;
+      box-sizing: border-box;
+      max-height: 100vh;
+      max-width: 100vw;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.8/paper-full.min.js"></script>
   <script src="script.js" type="text/paperscript" canvas="canvas"></script>
   </head>
-  <body">
-    <div><canvas id="canvas"></canvas></div>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div hidden style="display: none; opacity: 0;" height="0" width="0">
+      <img src="textures/trash/paper.png" id="paper">
+    </div>
   </body>
 </html>
