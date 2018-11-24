@@ -144,9 +144,9 @@ function addTrash(toAdd) {
   */
   while (toAdd--) {
       game.trashes.push({
-        x: Math.random()*game.map.width
-        y: Math.random()*game.map.height
-        type: "paper"
+        "x": Math.random()*game.map.width,
+        "y": Math.random()*game.map.height,
+        "type": "paper"
       })
   }
 }
