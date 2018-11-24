@@ -1,20 +1,5 @@
 {
-  "players": {
-    "26358123": {
-      "name": "",
-      "x": 110,
-      "y": 121,
-      "angle": 21,
-      "linearVelocity": 1,
-      "angularVelocity": 1,
-      "size": 1,
-      "isMoving": false,
-      "isActing": false,
-      "type": "normal",
-      "powerUp": "turbo",
-      "powerUpUsesLeft": 60
-    }
-  },
+  "players": {},
   "trashes": [
     {
       "x": 413,
