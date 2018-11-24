@@ -37,7 +37,9 @@ Aqui escriu el Mauri
 
 */
 
-
+function sendGame() {
+  
+}
 
 
 /*
@@ -90,13 +92,13 @@ function checkActions() {
 function updateGame(){
   for (const playerId in game.players) {
     var player = game.players[playerId];
-    if (palyer.isMoving) movePlayer(player);
+    if (player.isMoving) movePlayer(player);
     else rotatePlayer(player);
   }
 
   checkCollisionsPlayers();
-  checkCollisionsTrash();
-  checkCollisionsPowerUp();
+  checkCollisionsTrahses();
+  checkCollisionsPowerUps();
   checkActions();
   repopulatePowerUp();
   repopulateTrash();
@@ -106,8 +108,6 @@ function updateGame(){
 /*
 Aqui escriu el Carles
 */
-
-game = require('game.json');
 
 function movePlayer(player) {
   /*
