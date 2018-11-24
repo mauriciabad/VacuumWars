@@ -15,8 +15,8 @@ http.listen(3000, () => {
 
 // The game
 var game   = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
-var gameId = setInterval(updateGame(), 1000/60);
-setInterval(sendGame(), 1000/60);
+var gameId = setInterval(() => {updateGame()}, 1000/60);
+setInterval(() => {sendGame()}, 1000/60);
 
 // When a player connects
 io.on('connection', (socket) => {
