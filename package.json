@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Vacumm wars!",
   "dependencies": {
-    "express": "^4.15.2",
+    "express": "^4.16.4",
     "socket.io": "^2.1.1"
   }
 }

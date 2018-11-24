@@ -46,7 +46,12 @@ Aqui escriu el Mauri
 /*
 Aqui escriu l'Alvaro
 */
+function updateGame(){
+  for(var i = 0; i < players.length; ++i){
+    if()
+  }
 
+}
 
 
 
