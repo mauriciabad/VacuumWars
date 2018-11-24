@@ -5,7 +5,7 @@
 
 
 
-var paper = new Raster('paper');
+var paper = new Raster('textures/trash/paper.png');
 paper.position = view.center;
 
 function onResize(event) {
