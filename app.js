@@ -107,6 +107,103 @@ function updateGame(){
 Aqui escriu el Carles
 */
 
+game = require('game.json');
+
+function movePlayer(player) {
+  /*
+    TODO: Afegir les velocitats a una variable
+  */
+  player.x += Math.cos(player.angle)*10*player.linearVelocity*(1000/60)
+  player.y += Math.sin(player.angle)*10*player.linearVelocity*(1000/60)
+
+}
+
+function reverseMovePlayer(player) {
+    /*
+    TODO: Afegir les velocitats a una variable
+  */
+  player.x -= Math.cos(player.angle)*10*player.linearVelocity*(1000/60)
+  player.y -= Math.sin(player.angle)*10*player.linearVelocity*(1000/60)
+
+}
+
+function rotatePlayer(player) {
+  player.angle += 10*player.angularVelocity*(1000/60)
+  if (player.angle > 360) {
+    player.angle -= 360
+  } else if (player.angle < 360) {
+    player.angle += 360
+  }
+
+
+}
+
+function addTrash(toAdd) {
+  /*
+  TODO: La trash es random pero es pot superposar
+  */
+  while (toAdd--) {
+      game.trashes.push({
+        x: Math.random()*game.map.width
+        y: Math.random()*game.map.height
+        type: "paper"
+      })
+  }
+}
+
+function checkCollisionsPlayers() {
+  for(const playerId1 in game.players) {
+    var player1 = game.players[playerId1]
+    for(const playerId2 in game.players) {
+      if (playerId1 != playerId2) {
+        var player2 = game.players[playerId2]
+        if (playerPlayerCollision(player1,player2)) {
+          reverseMovePlayer(player1)
+          reverseMovePlayer(player2)
+        }
+      }
+    }
+
+  }
+}
+
+function checkCollisionsTrahses() {
+  for(const playerId in game.players) {
+    var player = game.players[playerId];
+    for(const trash in game.trashes) {
+      if (playerTrashCollision(player,trash)) {
+        delete game.trashes[trash];
+      }
+    }
+
+  }
+}
+
+function checkCollisionsPowerUps() {
+  for(const playerId in game.players) {
+    var player = game.players[playerId];
+    for(const powerUp in game.powerUps) {
+      if (playerPowerUpCollision(player,powerUp)) {
+        delete game.powerUps[powerUp];
+      }
+    }
+  }
+}
+
+
+function playerTrashCollision(player,trash) {
+  return false;
+}
+
+function playerPlayerCollision(player1,player2) {
+  return false;
+}
+
+function playerPowerUpCollision(player,powerUp) {
+  return false;
+}
+
+
 
 
 
