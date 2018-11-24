@@ -1,4 +1,16 @@
+var socket = io();
 
+      socket.on('players', function(){
+        
+      });
+
+      socket.on('powerUps', function(){
+
+      });
+
+      socket.on('trashes', function(){
+
+      });
 
 
 
