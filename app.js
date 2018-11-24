@@ -23,6 +23,8 @@ io.on('connection', (socket) => {
   game.players[socket.id] = JSON.parse(fs.readFileSync("vars/defaultPlayer.json"));
 
   var player = game.players[socket.id];
+  player.x = Math.floor(Math.random()*game.map.width);
+  player.y = Math.floor(Math.random()*game.map.height);
 
   socket.on('disconnect', ()       => { delete game.players[socket.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });
@@ -129,8 +131,8 @@ function reverseMovePlayer(player) {
 }
 
 function rotatePlayer(player) {
-  player.angle += 10*player.angularVelocity*(1000/60)
-  player.angle %= 360
+  player.angle += 0.5*player.angularVelocity*(1000/60);
+  player.angle %= 360;
 
 }
 
@@ -141,7 +143,7 @@ function addTrash(toAdd) {
   while (toAdd--) {
       game.trashes.push({
         "x": Math.random()*game.map.width,
-        "y": Math.random()*game.map.heigth,
+        "y": Math.random()*game.map.height,
         "type": "paper"
       })
   }

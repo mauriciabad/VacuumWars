@@ -39,7 +39,7 @@
     "id": 1,
     "name": "Dinning Room",
     "width": 1200,
-    "heigth": 600,
+    "height": 600,
     "texture": "textures/vacuum/dinnerRoom.png"
   }
 }
