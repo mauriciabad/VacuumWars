@@ -132,12 +132,7 @@ function reverseMovePlayer(player) {
 
 function rotatePlayer(player) {
   player.angle += 10*player.angularVelocity*(1000/60)
-  if (player.angle > 360) {
-    player.angle -= 360
-  } else if (player.angle < 360) {
-    player.angle += 360
-  }
-
+  player.angle %= 360
 
 }
 
