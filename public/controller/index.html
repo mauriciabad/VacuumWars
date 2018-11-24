@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Controller | Vacuum Wars</title>
+</head>
+<body>
+  
+
+  <script>
+    function end_handler(e) {
+      e.preventDefault();
+      if (logEvents) log(e.type, e, false);
+      if (e.targetTouches.length == 0) {
+        // Restore background and border to original values
+        e.target.style.background = "white";
+        e.target.style.border = "1px solid black";
+      }
+    }
+
+    function start_handler(ev) {
+      // If the user makes simultaneious touches, the browser will fire a 
+      // separate touchstart event for each touch point. Thus if there are 
+      // three simultaneous touches, the first touchstart event will have 
+      // targetTouches length of one, the second event will have a length 
+      // of two, and so on.
+      ev.preventDefault();
+      // Cache the touch points for later processing of 2-touch pinch/zoom
+      if (ev.targetTouches.length == 2) {
+        for (var i=0; i < ev.targetTouches.length; i++) {
+          tpCache.push(ev.targetTouches[i]);
+        }
+      }
+      if (logEvents) log("touchStart", ev, true);
+      update_background(ev);
+      }
+  </script>
+</body>
+</html>
