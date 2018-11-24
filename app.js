@@ -10,6 +10,10 @@ http.listen(3000, function(){
   console.log('listening on localhot:3000');
 });
 
+var game = {};
+var gameId = setInterval(updateGame(), 1000/60);
+var sockets = {};
+
 io.on('connection', function(socket){
   var player = '';
 
