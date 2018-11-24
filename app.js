@@ -27,13 +27,14 @@ io.on('connection', (socket) => {
   player.x   = Math.floor(Math.random()*game.map.width);
   player.y   = Math.floor(Math.random()*game.map.height);
 
-  socket.on('disconnect', ()       => { delete game.players[socket.id] });
+  io.emit('playerConnect', player);
+  socket.on('disconnect', ()       => { io.emit('playerDisconnect', socket.id);
+                                        delete game.players[socket.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });
   socket.on('rename', (name)       => { player.name = name; });
   socket.on('move',   (isMoving)   => { player.isMoving = isMoving; });
   socket.on('active', (isActing)   => { player.isActing = isActing; });
 });
-
 
 /*
 Aqui escriu el Mauri
@@ -41,7 +42,7 @@ Aqui escriu el Mauri
 */
 
 function sendGame(){
-  io.emit('players', game.players);
+  io.emit('playersUpdate', game.players);
   io.emit('trashes',game.trashes)  
 }
 
