@@ -4,8 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Preview | Vacuum Wars</title>
-</head>
-<body>
-  Empty Document
-</body>
+  <title>Controller | Vacuum Wars</title>
+  <style>
+    body{
+      margin: 0;
+      background-color: #333;
+      color: white;
+      font-family: 'Gaegu', cursive;
+    }
+    body > div{
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #canvas{
+      border: solid 10px #b3aa7c;
+      height: 400px;
+      width: 600px;
+      background-color: #cac6ad;
+      border-radius: 10px;
+    }
+  </style>
+  </head>
+  <body onload="startGame()" onkeydown="keyPressed(event);" onkeyup="keyReleased(event);">
+    <div><canvas id="canvas"></canvas></div>
+  </body>
+</html>
