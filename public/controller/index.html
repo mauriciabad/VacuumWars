@@ -59,27 +59,31 @@
     <span>Player Name</span>
   </div>
   <div class="button-wraper">
-    <div id="move-button" ontouchstart="move(true, event);" ontouchend="move(false, event);" ontouchcancel="move(false, event);" class="button" tabindex="0">
+    <div id="move-button" ontouchstart="move(true, event);" onmousedown="move(true, event);" ontouchend="move(false, event);" ontouchcancel="move(false, event);" onmouseup="move(false, event);" class="button" tabindex="0">
       <div>➟</div>
     </div>
-    <div id="action-button" ontouchstart="action(true, event);" ontouchend="action(false, event);" ontouchcancel="action(false, event);" class="button" tabindex="1">
+    <div id="action-button" ontouchstart="action(true, event);" onmousedown="action(true, event);" ontouchend="action(false, event);" ontouchcancel="action(false, event);" onmouseup="action(false, event);" class="button" tabindex="1">
       <div>☼</div>
     </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io('http://localhost');
+    console.log("esjdfbejsd");
     
+    var socket = io('http://localhost');
+
     socket.on('points', function (points) {
       console.log(points);
     });
     
     function move(isMoving, e) {
+      console.log('isMoving', isMoving);
       e.preventDefault();
       socket.emit('move', isMoving);
     }
     function action(isActing, e) {
+      console.log('isActing', isActing);
       e.preventDefault();
       socket.emit('active', isActing);
     }
