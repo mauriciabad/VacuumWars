@@ -163,40 +163,62 @@ function checkCollisionsPlayers() {
 }
 
 function checkCollisionsTrahses() {
+  var broadcast = false
   for(const playerId in game.players) {
     var player = game.players[playerId];
     for(const trash in game.trashes) {
-      if (playerTrashCollision(player,trash)) {
+      if (playerTrashOrPowerUpCollision(player,trash)) {
         delete game.trashes[trash];
+        broadcast = true
       }
     }
-
+  }
+  if (broadcast) {
+    io.emit('trashes',game.trashes)
   }
 }
 
 function checkCollisionsPowerUps() {
+  var broadcast = false
   for(const playerId in game.players) {
     var player = game.players[playerId];
     for(const powerUp in game.powerUps) {
-      if (playerPowerUpCollision(player,powerUp)) {
+      if (playerTrashOrPowerUpCollision(player,powerUp)) {
         delete game.powerUps[powerUp];
       }
     }
   }
+  if (broadcast) {
+    io.emit('powerUps',game.powerUps)
+  }
 }
 
-
-function playerTrashCollision(player,trash) {
-  return false;
+function euclideanDist(x1,y1,x2,y2) {
+  return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
 }
+
+function pointInCircle(xC,yC,rC,xP,yP) {
+  return((xP-xC)*(xP-xC) + (yP-yC)*(yP-yC) <= rC*rC)
+}
+
 
 function playerPlayerCollision(player1,player2) {
-  return false;
+  /*
+  TODO: posar be el radius pq esta harcodeado
+  */
+  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) > 2*(20))
 }
 
-function playerPowerUpCollision(player,powerUp) {
-  return false;
+function playerTrashOrPowerUpCollision(player,object) {
+  var moveX = sizeX/2
+  var moveY = sizeY/2
+  return( pointInCircle(player.x,player.y,20, object.x + moveX, object.y + moveY) ||
+          pointInCircle(player.x,player.y,20, object.x + moveX, object.y - moveY) ||
+          pointInCircle(player.x,player.y,20, object.x - moveX, object.y + moveY) ||
+          pointInCircle(player.x,player.y,20, object.x - moveX, object.y - moveY)
+    );
 }
+
 
 
 
