@@ -52,6 +52,7 @@ window.onload = function() {
 
 
   // this player movement
+  var tool = new paper.Tool();
   tool.onKeyDown = function(event) {
     switch (event.key) {
       case 'space':
