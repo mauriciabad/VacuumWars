@@ -3,7 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/controller/index.html');
 });
 
 io.on('connection', function(socket){
@@ -13,8 +13,12 @@ io.on('connection', function(socket){
     socket.emit('welcome','heh<aaaa');
   });
 
-  socket.on('chat message', function(msg){
-    io.emit('chat message', {for: "ferf", d: "dd"});
+  socket.on('move', function(isMoving){
+    console.log("Socket Move");
+  });
+
+  socket.on('active', function(isActing){  
+    console.log("Socket Active");  
   });
 });
 
