@@ -15,10 +15,10 @@ window.onload = function() {
   });
 
   socket.on('playerDisconnect', (disconnectedPlayer) => {
-    players[connectedPlayer.id].raster.remove();
-    delete players[connectedPlayer.id];
+    players[disconnectedPlayer.id].raster.remove();
+    delete players[disconnectedPlayer.id];
   });
-  socket.on('playerConnect', (connectedPlayer) => {
+  socket.on('playerConnect', (connectedPlayer) => {    
     players[connectedPlayer.id] = connectedPlayer;
     players[connectedPlayer.id].raster = new paper.Raster(`textures/vacuum/${connectedPlayer.type}.png`);
     players[connectedPlayer.id].raster.position = new paper.Point(connectedPlayer.x, connectedPlayer.y);
@@ -27,9 +27,10 @@ window.onload = function() {
   
   socket.on('playersUpdate', (newPlayers) => {
     for (const player in players) {
-      players[player] = newPlayers[player];
-      players[player].raster.moveTo(new paper.Point(players[player].x, players[player].y));
-      players[player].raster.rotate(players[player].angle);
+      var angle = newPlayers[player].angle - players[player].angle;
+      players[player] =  Object.assign(players[player], newPlayers[player]);
+      players[player].raster.position = new paper.Point(players[player].x, players[player].y);
+      players[player].raster.rotate(angle);
     }
   });
   

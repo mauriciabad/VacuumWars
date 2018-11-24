@@ -28,8 +28,8 @@ io.on('connection', (socket) => {
   player.y   = Math.floor(Math.random()*game.map.height);
 
   io.emit('playerConnect', player);
-  socket.on('disconnect', ()       => { io.emit('playerDisconnect', socket.id);
-                                        delete game.players[socket.id] });
+  socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
+                                        delete game.players[player.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });
   socket.on('rename', (name)       => { player.name = name; });
   socket.on('move',   (isMoving)   => { player.isMoving = isMoving; });
