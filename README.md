@@ -48,6 +48,7 @@ Pots desbloquejar-ne per "desafios"
 - Una mini de ma
 - Una autonoma
 - De lauzhack
+- Amb la cara d'algú
 
 ### Color
 - Tots
