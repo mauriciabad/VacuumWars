@@ -69,9 +69,7 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    console.log("esjdfbejsd");
-    
-    var socket = io('http://localhost');
+    var socket = io();
 
     socket.on('points', function (points) {
       console.log(points);
