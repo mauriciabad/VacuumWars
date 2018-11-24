@@ -43,14 +43,33 @@ Aqui escriu el Mauri
 /*
 Aqui escriu l'Alvaro
 */
-function updateGame(){
-  for(var i = 0; i < players.length; ++i){
-    if()
-  }
 
+function repopulateTrash() {
+  if(game.trashes.length < game.config.minTrash){
+    addTrash(game.config.minTrash - game.trashes.length);
+  }
 }
 
+function checkActions() {
+  for (const playerId in game.players) {
+    var player = game.players[playerId];
+    if (player.isActing) executePowerUp(player.PowerUp); //Mirar si no es null
+  }
+}
 
+function updateGame(){
+  for (const playerId in game.players) {
+    var player = game.players[playerId];
+    if (palyer.isMoving) movePlayer(playerId);
+    else rotatePlayer(playerId);
+  }
+
+  checkActions();
+  checkCollisionsPlayers();
+  checkCollisionsTrash();
+  repopulateTrash();
+
+}
 
 /*
 Aqui escriu el Carles
