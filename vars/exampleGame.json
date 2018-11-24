@@ -16,8 +16,8 @@
   ],
   "trashTypes": {
     "paper":{
-      "sizeX": 5,
-      "sizeY": 5,
+      "sizeX": 30,
+      "sizeY": 30,
       "texture": "textures/trash/paper.png"
     }
   },

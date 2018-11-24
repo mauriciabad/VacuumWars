@@ -1,16 +1,13 @@
 // Load modules
-var app  = require('express')();
-var http = require('http').Server(app);
-var io   = require('socket.io')(http);
-var fs   = require("fs");
+var express = require('express');
+var app     = express();
+var http    = require('http').Server(app);
+var io      = require('socket.io')(http);
+var fs      = require("fs");
 
 // Show HTML
-app.get('/controller', (req, res) => {
-  res.sendFile(__dirname + '/public/controller/index.html');
-});
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
+app.use(express.static('public'));
+
 
 http.listen(3000, () => {
   console.log('listening on localhot:3000');
