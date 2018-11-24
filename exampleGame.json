@@ -2,8 +2,8 @@
   "players": {
     "26358123": {
       "name": "",
-      "x": 10,
-      "y": 21,
+      "x": 110,
+      "y": 121,
       "angle": 21,
       "linearVelocity": 1,
       "angularVelocity": 1,
@@ -11,16 +11,24 @@
       "isMoving": false,
       "isActing": false,
       "type": "normal",
-      "powerUp": "turbo"
+      "powerUp": "turbo",
+      "powerUpUsesLeft": 60
     }
   },
-  "trashes": {
-    "21434":{
-      "x": 43,
-      "y": 24,
+  "trashes": [
+    {
+      "x": 413,
+      "y": 243,
       "type": "paper"
     }
-  },
+  ],
+  "powerUps": [
+    {
+      "type": "turbo",
+      "x": 612,
+      "y": 201
+    }
+  ],
   "trashTypes": {
     "paper":{
       "sizeX": 5,
@@ -34,9 +42,11 @@
       "texture": "textures/vacuum/paper.png"
     }
   },
-  "powerUpTypes": [
-    "turbo"
-  ],
+  "powerUpTypes": {
+    "turbo": {
+      "uses": 90
+    }
+  },
   "config": {
     "minTrash": 10
   },
