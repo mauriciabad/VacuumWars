@@ -57,4 +57,9 @@ Pots desbloquejar-ne per "desafios"
 - refresh de la skin
 - boto avançar
 - boto acció (surt el dibuix del powerup)
-- 
+- fa el soroll de l'aspiradora
+- vibra quan et desplaces.
+
+## Visualitzador
+- Interactua amb el mapa(obrint i tencant portes, posant merda...)
+- Interactua amb jugadors
