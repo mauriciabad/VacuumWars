@@ -22,7 +22,7 @@ setInterval(() => {sendGame()}, 1000/60);
 io.on('connection', (socket) => {
   game.players[socket.id] = JSON.parse(fs.readFileSync("vars/defaultPlayer.json"));
 
-  let player = game.players[socket.id];
+  var player = game.players[socket.id];
 
   socket.on('disconnect', ()       => { delete game.players[socket.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });

@@ -8,7 +8,7 @@
   "size": 1,
   "isMoving": false,
   "isActing": false,
-  "type": "normal",
+  "type": "real",
   "powerUp": null,
   "powerUpUsesLeft": 0,
   "points": 0
