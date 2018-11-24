@@ -14,11 +14,13 @@ io.on('connection', function(socket){
   });
 
   socket.on('move', function(isMoving){
-    console.log("Socket Move");
+    if(isMoving) console.log("Socket Move");
+    else console.log("Stopped Moving");
   });
 
   socket.on('active', function(isActing){  
-    console.log("Socket Active");  
+    if(isActing) console.log("Socket Active"); 
+    else console.log("Socket not acting"); 
   });
 });
 
