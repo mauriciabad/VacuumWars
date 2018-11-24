@@ -39,6 +39,9 @@ Aqui escriu el Mauri
 
 function sendGame(){
   io.emit('players', game.players);
+  io.emit('trashes',game.trashes)
+  console.log(game.trashes);
+  
 }
 
 
@@ -210,8 +213,8 @@ function playerPlayerCollision(player1,player2) {
 }
 
 function playerTrashOrPowerUpCollision(player,object) {
-  var moveX = sizeX/2
-  var moveY = sizeY/2
+  var moveX = 10/2
+  var moveY = 10/2
   return( pointInCircle(player.x,player.y,20, object.x + moveX, object.y + moveY) ||
           pointInCircle(player.x,player.y,20, object.x + moveX, object.y - moveY) ||
           pointInCircle(player.x,player.y,20, object.x - moveX, object.y + moveY) ||
