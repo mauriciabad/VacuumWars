@@ -70,26 +70,18 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io('http://localhost');
-    socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
+    
+    socket.on('points', function (points) {
+      console.log(points);
     });
-
+    
     function move(isMoving, e) {
       e.preventDefault();
-      if (isMoving) {
-        
-      }else{
-
-      }
+      socket.emit('move', isMoving);
     }
     function action(isActing, e) {
       e.preventDefault();
-      if (isActing) {
-        
-      }else{
-
-      }
+      socket.emit('active', isActing);
     }
   </script>
 </body>
