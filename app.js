@@ -1,41 +1,34 @@
+// Load modules
 var app  = require('express')();
 var http = require('http').Server(app);
 var io   = require('socket.io')(http);
+var fs   = require("fs");
 
-app.get('/', function(req, res){
+// Show HTML
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/controller/index.html');
 });
 
-http.listen(3000, function(){
+http.listen(3000, () => {
   console.log('listening on localhot:3000');
 });
 
-var game = {};
+// The game
+var game   = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
 var gameId = setInterval(updateGame(), 1000/60);
-var sockets = {};
+setInterval(sendGame(), 1000/60);
 
-io.on('connection', function(socket){
-  var player = '';
+// When a player connects
+io.on('connection', (socket) => {
+  game.players[socket.id] = JSON.parse(fs.readFileSync("vars/defaultPlayer.json"));
 
-  console.log('Connected user: ' + socket.id);
+  let player = game.players[socket.id];
 
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-
-  socket.on('rename', function(name){
-    console.log(name);
-  });
-
-  socket.on('move', function(isMoving){
-    if(isMoving) console.log("Socket Move");
-    else console.log("Stopped Moving");
-  });
-
-  socket.on('active', function(isActing){  
-    if(isActing) console.log("Socket Active"); 
-    else console.log("Socket not acting"); 
-  });
+  socket.on('disconnect', ()       => { delete game.players[socket.id] });
+  socket.on('changeVacuum', (type) => { player.type = type; });
+  socket.on('rename', (name)       => { player.name = name; });
+  socket.on('move',   (isMoving)   => { player.isMoving = isMoving; });
+  socket.on('active', (isActing)   => { player.isActing = isActing; });
 });
 
 
