@@ -50,25 +50,57 @@ function repopulateTrash() {
   }
 }
 
+function addPowerUp() {
+  var randx = Math.random();
+  var randy = Math.random();
+  randx = randx*game.map.width;
+  randy = randy*game.map.height;
+  var json = {"x": randx, "y": randy, "type":"turbo"}
+  game.powerUps.push(json);
+}
+
+function repopulatePowerUp() {
+  var prob = Math.random();
+  if(prob > 0.95) addPowerUp();
+}
+
+function executePowerUp(player, duration) {
+  var powerUp = player.powerUp;
+  if(duration > 0){ //Si el powerup encara dura.
+    switch (powerUp) {
+      case "turbo":
+        player.angularVelocity = 1.5;
+        player.linearVelocity = 1.5;
+        player.usesLeft -= 1;
+        break;
+    
+      default:
+        break;
+    }
+  }
+}
+
 function checkActions() {
   for (const playerId in game.players) {
     var player = game.players[playerId];
-    if (player.isActing) executePowerUp(player.PowerUp); //Mirar si no es null
+    if (player.isActing) executePowerUp(player); //Mirar si no es null
   }
 }
 
 function updateGame(){
   for (const playerId in game.players) {
     var player = game.players[playerId];
-    if (palyer.isMoving) movePlayer(playerId);
-    else rotatePlayer(playerId);
+    if (palyer.isMoving) movePlayer(player);
+    else rotatePlayer(player);
   }
 
-  checkActions();
   checkCollisionsPlayers();
   checkCollisionsTrash();
+  checkCollisionsPowerUp();
+  checkActions();
+  repopulatePowerUp();
   repopulateTrash();
-
+  //respawn
 }
 
 /*
