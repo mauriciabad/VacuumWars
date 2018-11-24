@@ -22,9 +22,9 @@
     }
   },
   "vacuumTypes": {
-    "normal":{
-      "radius": 20,
-      "texture": "textures/vacuum/paper.png"
+    "real":{
+      "radius": 30,
+      "texture": "textures/vacuum/real.png"
     }
   },
   "powerUpTypes": {
