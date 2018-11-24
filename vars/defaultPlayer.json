@@ -10,5 +10,6 @@
   "isActing": false,
   "type": "normal",
   "powerUp": null,
-  "powerUpUsesLeft": 0
+  "powerUpUsesLeft": 0,
+  "points": 0
 }

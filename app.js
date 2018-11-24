@@ -37,8 +37,8 @@ Aqui escriu el Mauri
 
 */
 
-function sendGame() {
-  
+function sendGame(){
+  io.emit('players', game.players);
 }
 
 
