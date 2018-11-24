@@ -5,37 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Controller | Vacuum Wars</title>
+  <style>
+    *{box-sizing: inherit; line-height: inherit; user-select: inherit;}
+    body{
+      box-sizing: border-box;
+      line-height: 1;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #222;
+      color: #fff;
+      user-select: none;
+    }
+    .info-wraper{
+      height: 2em;
+      display: flex;
+      align-items: center;
+      padding: 0 2em;
+    }
+    .button-wraper{
+      flex-grow: 1;
+      display: flex;
+    }
+    .button-wraper > div{
+      flex-grow: 1;
+    }
+    .button{
+      margin: 16px;
+      margin-bottom: 32px;
+      background-color: blueviolet;
+      border-radius: 16px;
+      /* border: solid 8px #999; */
+      box-shadow: 0 16px 0 rgb(74, 22, 104);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8em;
+      transition: opacity 200ms ease-out, transform 200ms ease-out;
+      outline: none;
+    }
+    .button:focus{
+      opacity: 0.8;
+    }
+    .button:active{
+      transform: scale(0.8);
+    }
+  </style>
 </head>
 <body>
-  
+  <div class="info-wraper">
+    <span>Player Name</span>
+  </div>
+  <div class="button-wraper">
+    <div id="move-button" ontouchstart="move(true, event);" ontouchend="move(false, event);" ontouchcancel="move(false, event);" class="button" tabindex="0">
+      <div>➟</div>
+    </div>
+    <div id="action-button" ontouchstart="action(true, event);" ontouchend="action(false, event);" ontouchcancel="action(false, event);" class="button" tabindex="1">
+      <div>☼</div>
+    </div>
+  </div>
 
+  <script src="/socket.io/socket.io.js"></script>
   <script>
-    function end_handler(e) {
+    var socket = io('http://localhost');
+    socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
+
+    function move(isMoving, e) {
       e.preventDefault();
-      if (logEvents) log(e.type, e, false);
-      if (e.targetTouches.length == 0) {
-        // Restore background and border to original values
-        e.target.style.background = "white";
-        e.target.style.border = "1px solid black";
+      if (isMoving) {
+        
+      }else{
+
       }
     }
+    function action(isActing, e) {
+      e.preventDefault();
+      if (isActing) {
+        
+      }else{
 
-    function start_handler(ev) {
-      // If the user makes simultaneious touches, the browser will fire a 
-      // separate touchstart event for each touch point. Thus if there are 
-      // three simultaneous touches, the first touchstart event will have 
-      // targetTouches length of one, the second event will have a length 
-      // of two, and so on.
-      ev.preventDefault();
-      // Cache the touch points for later processing of 2-touch pinch/zoom
-      if (ev.targetTouches.length == 2) {
-        for (var i=0; i < ev.targetTouches.length; i++) {
-          tpCache.push(ev.targetTouches[i]);
-        }
       }
-      if (logEvents) log("touchStart", ev, true);
-      update_background(ev);
-      }
+    }
   </script>
 </body>
 </html>
