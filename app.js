@@ -23,8 +23,9 @@ io.on('connection', (socket) => {
   game.players[socket.id] = JSON.parse(fs.readFileSync("vars/defaultPlayer.json"));
 
   var player = game.players[socket.id];
-  player.x = Math.floor(Math.random()*game.map.width);
-  player.y = Math.floor(Math.random()*game.map.height);
+  player.id  = socket.id;
+  player.x   = Math.floor(Math.random()*game.map.width);
+  player.y   = Math.floor(Math.random()*game.map.height);
 
   socket.on('disconnect', ()       => { delete game.players[socket.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });
