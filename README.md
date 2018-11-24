@@ -13,6 +13,7 @@ Hi ha +3 mapes.
 ### Per millorar
 - Diferents sales de lluita
 - Desde el mobil veus lo que la aspiradora
+- Fer una especie de gravetat
 
 ## PowerUps:
 Cada 5 boles de paper buanyes un power up o tels troves

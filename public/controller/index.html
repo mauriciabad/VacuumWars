@@ -56,7 +56,7 @@
 </head>
 <body>
   <div class="info-wraper">
-    <span>Player Name</span>
+    <span contenteditable="true" onblur="rename(this.textContent)">Chose your name</span>
   </div>
   <div class="button-wraper">
     <div id="move-button" ontouchstart="move(true, event);" onmousedown="move(true, event);" ontouchend="move(false, event);" ontouchcancel="move(false, event);" onmouseup="move(false, event);" class="button" tabindex="0">
@@ -84,6 +84,10 @@
       console.log('isActing', isActing);
       e.preventDefault();
       socket.emit('active', isActing);
+    }
+    function rename(name) {
+      console.log(name);
+      
     }
   </script>
 </body>
