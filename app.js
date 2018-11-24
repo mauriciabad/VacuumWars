@@ -118,8 +118,8 @@ function movePlayer(player) {
   /*
     TODO: Afegir les velocitats a una variable
   */
-  player.x += Math.cos(player.angle)*10*player.linearVelocity*(1000/60)
-  player.y += Math.sin(player.angle)*10*player.linearVelocity*(1000/60)
+  player.x += Math.cos(player.angle)*1*player.linearVelocity*(1000/60)
+  player.y += Math.sin(player.angle)*1*player.linearVelocity*(1000/60)
 
 }
 
