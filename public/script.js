@@ -17,6 +17,7 @@ window.onload = function() {
     for (const player in players) {
       let i = playersRaster.push(new paper.Raster(`textures/vacuum/${players[player].type}.png`))  - 1;
       playersRaster[i].position = new paper.Point(players[player].x, players[player].y);
+      playersRaster[i].rotate(players[player].angle);
     }
   });
   
