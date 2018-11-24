@@ -22,11 +22,13 @@ window.onload = function() {
     players[connectedPlayer.id] = connectedPlayer;
     players[connectedPlayer.id].raster = new paper.Raster(`textures/vacuum/${connectedPlayer.type}.png`);
     players[connectedPlayer.id].raster.position = new paper.Point(connectedPlayer.x, connectedPlayer.y);
-    players[connectedPlayer.id].raster.rotate(connectedPlayer.angle);
+    players[connectedPlayer.id].raster.rotate(90);
   });
   
   socket.on('playersUpdate', (newPlayers) => {
     for (const player in players) {
+      console.log(players[player])
+      console.log(newPlayers[player])
       var angle = newPlayers[player].angle - players[player].angle;
       players[player] =  Object.assign(players[player], newPlayers[player]);
       players[player].raster.position = new paper.Point(players[player].x, players[player].y);

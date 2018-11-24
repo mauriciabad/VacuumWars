@@ -118,8 +118,8 @@ function movePlayer(player) {
   /*
     TODO: Afegir les velocitats a una variable
   */
-  player.x += Math.cos(player.angle)*1*player.linearVelocity*(1000/60)
-  player.y += Math.sin(player.angle)*1*player.linearVelocity*(1000/60)
+  player.x += Math.cos(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
+  player.y += Math.sin(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
 
 }
 
@@ -127,13 +127,13 @@ function reverseMovePlayer(player) {
     /*
     TODO: Afegir les velocitats a una variable
   */
-  player.x -= Math.cos(player.angle)*10*player.linearVelocity*(1000/60)
-  player.y -= Math.sin(player.angle)*10*player.linearVelocity*(1000/60)
+  player.x -= Math.cos(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
+  player.y -= Math.sin(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
 
 }
 
 function rotatePlayer(player) {
-  player.angle += 0.5*player.angularVelocity*(1000/60);
+  player.angle += 0.1*player.angularVelocity*(1000/60);
   player.angle %= 360;
 
 }
