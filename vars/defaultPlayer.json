@@ -1,12 +1,14 @@
 {
   "name": "",
-    "x": 0,
-    "y": 0,
-    "angle": 0,
-    "linearVelocity": 1,
-    "angularVelocity": 1,
-    "size": 1,
-    "isMoving": false,
-    "isActing": false,
-    "type": "normal"
+  "x": 0,
+  "y": 0,
+  "angle": 0,
+  "linearVelocity": 1,
+  "angularVelocity": 1,
+  "size": 1,
+  "isMoving": false,
+  "isActing": false,
+  "type": "normal",
+  "powerUp": null,
+  "powerUpUsesLeft": 0
 }
