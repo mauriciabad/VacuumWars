@@ -54,7 +54,6 @@ Aqui escriu el Mauri
 
 function sendGame(){
   io.emit('playersUpdate', game.players);
-  io.emit('trashes',game.trashes)  
 }
 
 
@@ -134,13 +133,15 @@ function addTrash() {
   /*
   TODO: La trash es random pero es pot superposar
   */
+  var id = ((new Date()).getTime() + '' game.trashes.length) >>> 0
     var newTrash = {
+      "id": id,
       "x": Math.random()*game.map.width,
       "y": Math.random()*game.map.height,
       "type": "paper"
     };
 
-    game.trashes.push(newTrash);    
+    game.trashes[id] = newTrash;    
     io.emit('trashCreated', newTrash);
 }
 
@@ -163,19 +164,19 @@ function checkCollisionsPlayers() {
   }
 }
 
+function deleteTrash(trash) {
+  delete game.trashes[trash];
+  io.emit("deleteTrash",trash);
+}
+
 function checkCollisionsTrahses() {
-  var broadcast = false
   for(const playerId in game.players) {
     var player = game.players[playerId];
     for(const trash in game.trashes) {
       if (playerTrashOrPowerUpCollision(player,trash)) {
-        delete game.trashes[trash];
-        broadcast = true
+        deleteTrash(trash);
       }
     }
-  }
-  if (broadcast) {
-    io.emit('trashes',game.trashes)
   }
 }
 
