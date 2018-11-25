@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
   player.type = leftSkins.pop();
   player.x   = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
   player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
-
+  player.points = 0
   // Send to others that i exist
   io.emit('playerConnect', player);
   // Recive info from the controller
@@ -180,12 +180,14 @@ function checkCollisionsTrahses() {
     for(var trashId in game.trashes) {
       var trash = game.trashes[trashId];
       if (playerTrashOrPowerUpCollision(player,trash)) {
+        player.points += 1;
         io.emit("trashDeleted",trash);
         delete game.trashes[trashId];
         console.log("Deleted Trash", trash);      }
       }
     }
   }
+<<<<<<< HEAD
   
   function checkCollisionsPowerUps() {
     for(var playerId in game.players) {
@@ -206,6 +208,14 @@ function playerCollidesTop(player)   { return 20 > player.y }
 function playerCollidesBottom(player){ return 5 > game.map.height - player.y }
 function playerCollidesLeft(player)  { return 20 > player.x }
 function playerCollidesRight(player) { return 5  > game.map.width - player.x }
+=======
+}
+
+function playerCollidesTop(player)   { return game.vacuumTypes[player.type].radius > player.y }
+function playerCollidesBottom(player){ return game.vacuumTypes[player.type].radius - 15 > game.map.height - player.y }
+function playerCollidesLeft(player)  { return game.vacuumTypes[player.type].radius > player.x }
+function playerCollidesRight(player) { return game.vacuumTypes[player.type].radius - 15  > game.map.width - player.x }
+>>>>>>> 89beaf6c2d6c70c14bb9d5152b6e11d67ccff60d
 
 
 function playerWallCollision(player) {
@@ -240,17 +250,17 @@ function playerPlayerCollision(player1,player2) {
   /*
   TODO: posar be el radius pq esta harcodeado
   */
-  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) <= 2*(20));
+  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) <= 2*(game.vacuumTypes[player.type].radius));
 }
 
 function playerTrashOrPowerUpCollision(player,object) {  
   var type = (game.trashTypes[object.type] != undefined) ? game.trashTypes[object.type] : game.powerUpTypes[object.type];
   var moveX = type.sizeX/2;
   var moveY = type.sizeY/2;
-  return( pointInCircle(player.x,player.y,20, object.x + moveX, object.y + moveY) ||
-          pointInCircle(player.x,player.y,20, object.x + moveX, object.y - moveY) ||
-          pointInCircle(player.x,player.y,20, object.x - moveX, object.y + moveY) ||
-          pointInCircle(player.x,player.y,20, object.x - moveX, object.y - moveY)
+  return( pointInCircle(player.x,player.y,game.vacuumTypes[player.type].radius, object.x + moveX, object.y + moveY) ||
+          pointInCircle(player.x,player.y,game.vacuumTypes[player.type].radius, object.x + moveX, object.y - moveY) ||
+          pointInCircle(player.x,player.y,game.vacuumTypes[player.type].radius, object.x - moveX, object.y + moveY) ||
+          pointInCircle(player.x,player.y,game.vacuumTypes[player.type].radius, object.x - moveX, object.y - moveY)
     );
 }
 
