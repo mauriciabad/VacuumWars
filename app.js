@@ -17,8 +17,8 @@ var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
 var intervalTime = game.config.intervalTime;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
-setInterval(() => {tryTrash()}, 200);
-setInterval(() => {tryPowerUp()}, 1000);
+setInterval(() => {tryTrash()}, 100);
+setInterval(() => {tryPowerUp()}, 1500);
 const skins = ["real1","real2","real3","real4"];
 var leftSkins = [];
 fillLeftSkins();
@@ -62,14 +62,14 @@ function fillLeftSkins() {
 }
 
 function tryPowerUp(){
-  console.log("Trying powerup");
-  if(Math.random() < 0.5) {
-    addPowerUp("turbo");
+  if(Math.random() < 0.3) {
+    if(Math.random() < 0.5) addPowerUp("turbo");
+    else addPowerUp("missil");
   }
 }
 
 function tryTrash(){
-  if(Math.random() < 0.05) {
+  if(Math.random() < 0.09) {
     repopulateTrash();
   }
 }
@@ -92,15 +92,17 @@ function addTrash(type) {
     console.log("Added trash", newTrash);
 }
 function addPowerUp(type) { //Adds a power up to Power up vectors
-  var newPowerUp = {
-    "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
-    "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].sizeX/2)),
-    "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].sizeY/2)),
-    "type": type
-  };
-  console.log(newPowerUp);
-  game.powerUps[newPowerUp.id] = newPowerUp;
-  io.emit('powerUpCreated', newPowerUp);
+  if(Object.keys(game.powerUps).length < 3){
+    var newPowerUp = {
+      "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
+      "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].sizeX/2)),
+      "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].sizeY/2)),
+      "type": type
+    };
+    console.log(newPowerUp);
+    game.powerUps[newPowerUp.id] = newPowerUp;
+    io.emit('powerUpCreated', newPowerUp);
+  }
 }
 
 function executePowerUp(player) {
@@ -203,6 +205,12 @@ function playerWallCollision(player) {
   } else if (playerCollidesRight(player)) {
     player.angle = 180 - player.angle
   }
+}
+
+function givePowerUp(player, powerUp){
+  player.powerUp = powerUp.name;
+  player.powerUpUsesLeft = powerUp.uses;
+
 }
 
 function checkCollisionsPowerUps() {
