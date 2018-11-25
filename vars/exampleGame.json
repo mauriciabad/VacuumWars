@@ -57,6 +57,42 @@
       "angularVelocity": 0.5,
       "radius": 20,
       "texture": "textures/vacuum/real4.png"
+    },
+    "real5":{
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.4,
+      "radius": 20,
+      "texture": "textures/vacuum/real5.png"
+    },
+    "real6":{
+      "linearVelocity": 0.4,
+      "angularVelocity": 0.5,
+      "radius": 20,
+      "texture": "textures/vacuum/real6.png"
+    },
+    "real7":{
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.5,
+      "radius": 20,
+      "texture": "textures/vacuum/real7.png"
+    },
+    "real8":{
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.5,
+      "radius": 20,
+      "texture": "textures/vacuum/real8.png"
+    },
+    "real9":{
+      "linearVelocity": 2,
+      "angularVelocity": 0.6,
+      "radius": 20,
+      "texture": "textures/vacuum/real9.png"
+    },
+    "real10":{
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.5,
+      "radius": 20,
+      "texture": "textures/vacuum/real10.png"
     }
   },
   "powerUpTypes": {

@@ -115,14 +115,14 @@ function addTrash(type) {
     io.emit('trashCreated', newTrash);
     // console.log("Added trash", newTrash);
 }
-function addPowerUp(type, uses) { //Adds a power up to Power up vectors
+function addPowerUp(type) { //Adds a power up to Power up vectors
   if(Object.keys(game.powerUps).length < 3){
     var newPowerUp = {
       "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
       "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].sizeX/2)),
       "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].sizeY/2)),
       "type": type,
-      "uses": uses
+      "uses": game.powerUpTypes[type].uses
     };
     game.powerUps[newPowerUp.id] = newPowerUp;
     io.emit('powerUpCreated', newPowerUp);
@@ -137,6 +137,7 @@ function resetStats(player){ //Resets stats of mutipliers
 
 function updatePowerUpUses(player){ //If the power up is empty, it erases it from user.
   if(player.powerUpUsesLeft <= 0){
+    console.log("heloo")
     player.powerUp = null;
     player.powerUpUsesLeft = 0;
     resetStats(player);
@@ -201,6 +202,7 @@ function shootMisil(player) {
     "x": 5 + player.x + game.vacuumTypes[player.type].radius*Math.cos(player.angle*2*Math.PI/360),
     "y": 5 + player.y + game.vacuumTypes[player.type].radius*Math.sin(player.angle*2*Math.PI/360),
     "angle": player.angle,
+    "owner": player.id
   };
   game.misils[newMisil.id] = newMisil;
   io.emit("misilCreated",newMisil)
@@ -219,7 +221,7 @@ function checkIfMissilOut(misil) {
   } else {
     for (var playerId in game.players) {
       var player = game.players[playerId];
-      if (euclideanDist(player.x,player.y,misil.x,misil.y) <= (game.vacuumTypes[player.type].radius + 8)){
+      if (!(player.id == misil.owner) && euclideanDist(player.x,player.y,misil.x,misil.y) <= (game.vacuumTypes[player.type].radius + 8)){
         player.points -= 200;
         delete game.misils[misil.id];
         io.emit('misilDeleted',misil);
