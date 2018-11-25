@@ -45,7 +45,7 @@ window.onload = function() {
 
   function animatePowerUps() {
     for (var powerUpId in powerUps) {
-      powerUps[powerUpId].raster.rotate(2*Math.random());
+      powerUps[powerUpId].raster.rotate(powerUps[powerUpId].rotationSpeed);
     }
   }
   
@@ -65,6 +65,7 @@ window.onload = function() {
   
   socket.on('powerUpCreated', (newPowerUp) => {
     powerUps[newPowerUp.id] = newPowerUp;
+    powerUps[newPowerUp.id].rotationSpeed = 2*(Math.random() - 0.5)*5;
     powerUps[newPowerUp.id].raster = new paper.Raster(`textures/powerups/${newPowerUp.type}.png`);
     powerUps[newPowerUp.id].raster.position = new paper.Point(newPowerUp.x, newPowerUp.y);
     powerUps[newPowerUp.id].raster.sendToBack();
