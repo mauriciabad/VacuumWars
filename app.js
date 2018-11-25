@@ -14,32 +14,37 @@ http.listen(PORT, () => {
 
 // Game setup
 var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
-var intervalTime = 1000/60;
+var intervalTime = game.config.intervalTime;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
 setInterval(() => {tryTrash()}, intervalTime/7);
-
-function tryTrash(){
-  if(Math.random() < 0.005) {
-    repopulateTrash();
-  }
-}
+const skins = ["real1","real2","real3","real4"];
+var leftSkins = [];
+fillLeftSkins();
 
 
 // When a player connects
 io.on('connection', (socket) => {
+  // Send current state to client
+  for(var trashId   in game.trashes)  socket.emit('trashCreated', game.trashes[trashId]);
+  for(var playerId  in game.players)  socket.emit('playerConnect', game.players[playerId]);
+  for(var powerUpId in game.powerUps) socket.emit('powerUpCreated', game.powerUps[powerUpId]);
+  
+  // Setup player
   game.players[socket.id] = JSON.parse(fs.readFileSync("vars/defaultPlayer.json"));
 
   var player = game.players[socket.id];
   player.id  = socket.id;
+  if(leftSkins.length == 0) fillLeftSkins();
+  player.type = leftSkins.pop();
   player.x   = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
   player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
 
+  // Send to others that i exist
   io.emit('playerConnect', player);
-  for(var trashId in game.trashes) {    
-    socket.emit('trashCreated', game.trashes[trashId]);
-  }
+  // Recive info from the controller
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
+                                        leftSkins.push(player.type);
                                         delete game.players[player.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });
   socket.on('rename', (name)       => { player.name = name; });
@@ -47,20 +52,19 @@ io.on('connection', (socket) => {
   socket.on('active', (isActing)   => { player.isActing = isActing; });
 });
 
-/*
-Aqui escriu el Mauri
-
-*/
-
 function sendGame(){
   io.emit('playersUpdate', game.players);
 }
 
+function fillLeftSkins() {
+  for (var skin of skins) leftSkins.push(skin);
+}
 
-/*
-Aqui escriu l'Alvaro
-*/
-
+function tryTrash(){
+  if(Math.random() < 0.005) {
+    repopulateTrash();
+  }
+}
 function repopulateTrash() {    
   if(Object.keys(game.trashes).length < game.config.maxTrash) addTrash('paper');
 }
