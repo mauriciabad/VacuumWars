@@ -63,8 +63,8 @@ function fillLeftSkins() {
 
 function tryPowerUp(){
   if(Math.random() < 0.3) {
-    if(Math.random() < 0.5) addPowerUp("turbo");
-    else addPowerUp("misil");
+    if(Math.random() < 0.5) addPowerUp("turbo", 90);
+    else addPowerUp("misil", 1);
   }
 }
 
@@ -91,13 +91,14 @@ function addTrash(type) {
     io.emit('trashCreated', newTrash);
     console.log("Added trash", newTrash);
 }
-function addPowerUp(type) { //Adds a power up to Power up vectors
+function addPowerUp(type, uses) { //Adds a power up to Power up vectors
   if(Object.keys(game.powerUps).length < 3){
     var newPowerUp = {
       "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
       "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].sizeX/2)),
       "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].sizeY/2)),
-      "type": type
+      "type": type,
+      "uses": uses
     };
     console.log(newPowerUp);
     game.powerUps[newPowerUp.id] = newPowerUp;
@@ -105,16 +106,35 @@ function addPowerUp(type) { //Adds a power up to Power up vectors
   }
 }
 
+function resetStats(player){ //Resets stats of mutipliers
+  player.angularVelocity = 1;
+  player.linearVelocity = 1;
+  player.size = 1;
+}
+
+function updatePowerUpUses(player){ //If the power up is empty, it erases it from user.
+  if(player.powerUpUsesLeft <= 0){
+    player.powerUp = null;
+    player.powerUpUsesLeft = 0;
+    resetStats(player);
+  } else player.powerUpUsesLeft -= 1;
+}
+
+
 function executePowerUp(player) {
   if (player.powerUp != null) {
-    if(player.powerUpUsesLeft > 0){
-      switch (player.powerUp) {
-        case "turbo":
-          player.angularVelocity = 1.5;
-          player.linearVelocity = 1.5;
-          player.usesLeft -= 1;
-          break;
-      }
+    switch (player.powerUp) {
+      case "turbo":
+      player.angularVelocity = 2;
+      player.linearVelocity = 3;
+      console.log(player.powerUpUsesLeft);
+      updatePowerUpUses(player);
+        break;
+      
+      case "misil":
+        shootMisil();
+        updatePowerUpUses(player);
+        break;
     }
   }
 }
@@ -122,7 +142,9 @@ function executePowerUp(player) {
 function checkActions() {
   for(var playerId in game.players) {
     var player = game.players[playerId];
-    if (player.isActing) executePowerUp(player);
+    if (player.isActing){
+      executePowerUp(player);
+    } else resetStats(player);
   }
 }
 
@@ -222,7 +244,7 @@ function playerWallCollision(player) {
 }
 
 function givePowerUp(player, powerUp){
-  player.powerUp = powerUp.name;
+  player.powerUp = powerUp.type;
   player.powerUpUsesLeft = powerUp.uses;
 
 }
