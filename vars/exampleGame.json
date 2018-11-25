@@ -89,11 +89,13 @@
       "sizeY": 30
     },
     "misil": {
-      "frequency": 3,
+      "frequency": 1000,
       "uses": 1,
       "sizeX": 30,
       "sizeY": 30,
-      "velocity": 1
+      "velocity": 0.3,
+      "thresholdAngle": 45,
+      "rate": 0.1
     },
     "magnet": {
       "frequency": 1,
