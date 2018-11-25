@@ -14,5 +14,6 @@
   "powerUpUsesLeft": 0,
   "points": 0,
   "state":"alive",
-  "penalitzation": 0
+  "penalitzation": 0,
+  "magnetic": false
 }

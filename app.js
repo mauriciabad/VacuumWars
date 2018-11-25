@@ -133,11 +133,11 @@ function resetStats(player){ //Resets stats of mutipliers
   player.angularVelocity = 1;
   player.linearVelocity = 1;
   player.size = 1;
+  player.magnetic = false;
 }
 
 function updatePowerUpUses(player){ //If the power up is empty, it erases it from user.
   if(player.powerUpUsesLeft <= 0){
-    console.log("heloo")
     player.powerUp = null;
     player.powerUpUsesLeft = 0;
     resetStats(player);
@@ -158,6 +158,11 @@ function executePowerUp(player) {
         shootMisil(player);
         updatePowerUpUses(player);
         break;
+
+      case "magnet":
+        player.magnetic = true;
+        updatePowerUpUses(player);
+        break;
     }
   }
 }
@@ -174,11 +179,12 @@ function checkActions() {
 function updateGame(){
   for(var playerId in game.players) {
     var player = game.players[playerId];
+    if (player.magnetic) atractAllPapers(player);
     if (player.state == "colliding") {
       movePlayer(player);
       player.penalitzation -= 1;
       if (player.penalitzation < 0) player.state = "alive";
-    }
+    } 
     else if (player.state == "alive") {
       if (player.isMoving) movePlayer(player);
       else rotatePlayer(player);
@@ -194,6 +200,17 @@ function updateGame(){
   checkCollisionsPowerUps();
   checkActions();
   //respawn
+}
+
+function atractAllPapers(player) {
+  for (var trashId in game.trashes) {
+    var trash = game.trashes[trashId];
+    angle = Math.atan((player.y - trash.y)/(player.x - trash.x))*360/2*Math.PI;
+    d = euclideanDist(player.x,player.y,trash.x,trash.y);
+    var distance = game.powerUpTypes["magnet"].atract*(1/d)*intervalTime;
+    trash.x += Math.cos(angle*2*Math.PI/360)*distance;
+    trash.y += Math.sin(angle*2*Math.PI/360)*distance;
+  }
 }
 
 function shootMisil(player) {
@@ -229,7 +246,6 @@ function checkIfMissilOut(misil) {
     }
   }
 }
-
 
 function movePlayer(player) {
   var distance = game.vacuumTypes[player.type].linearVelocity*player.linearVelocity*intervalTime;

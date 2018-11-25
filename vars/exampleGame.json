@@ -94,6 +94,11 @@
       "sizeX": 30,
       "sizeY": 30,
       "velocity": 1
+    },
+    "magnet": {
+      "frequency": 1,
+      "atract": 2,
+      "uses": 120
     }
   },
   "config": {
