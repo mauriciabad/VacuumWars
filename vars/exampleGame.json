@@ -89,13 +89,13 @@
       "sizeY": 30
     },
     "misil": {
-      "frequency": 1000,
+      "frequency": 3,
       "uses": 1,
       "sizeX": 30,
       "sizeY": 30,
       "velocity": 0.3,
       "thresholdAngle": 45,
-      "rate": 0.1
+      "rate": 0.7,
     },
     "magnet": {
       "frequency": 1,
@@ -108,7 +108,7 @@
   "config": {
     "maxPowerUp": 5,
     "maxTrash": 25,
-    "intervalTime": 16.666666666666667
+    "intervalTime": 25
   },
   "map": {
     "id": 1,
