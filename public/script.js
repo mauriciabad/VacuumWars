@@ -9,7 +9,10 @@ window.onload = function() {
   var powerUps = {};
   var players  = {};
   var misils   = {};
-  
+  var audios   = {
+    "misil-launch": new Audio('sounds/misil.ogg'),
+  }
+
   socket.on('setup', (game) => {
     canvas.height = game.map.height;
     canvas.width  = game.map.width;
@@ -37,7 +40,6 @@ window.onload = function() {
       players[player].angle = newPlayers[player].angle;
       players[player].raster.position = new paper.Point(players[player].x, players[player].y);
       players[player].raster.rotate(angle);
-
 
       animatePowerUps();
     }
@@ -94,6 +96,7 @@ window.onload = function() {
     misils[newMisil.id].raster.rotate(newMisil.angle);
     misils[newMisil.id].raster.sendToBack();
     console.log("Created Misil", newMisil);
+    audios['misil-launch'].play()
   });
 
   socket.on('misilDeleted', (deletedMisil) => {
