@@ -23,7 +23,7 @@
   },
   "vacuumTypes": {
     "real":{
-      "linearVelocity": 1,
+      "linearVelocity": 0.5,
       "angularVelocity": 0.5,
       "radius": 30,
       "texture": "textures/vacuum/real.png"
