@@ -8,6 +8,7 @@ window.onload = function() {
   var trashes  = {}; 
   var powerUps = {};
   var players  = {};
+  var misils   = {};
   
   socket.on('setup', (game) => {
     canvas.height = game.map.height;
@@ -31,9 +32,9 @@ window.onload = function() {
   socket.on('playersUpdate', (newPlayers) => {
     for(var player in newPlayers) {
       var angle = newPlayers[player].angle - players[player].angle;
-      players[player].x = newPlayers[player].x
-      players[player].y = newPlayers[player].y
-      players[player].angle = newPlayers[player].angle
+      players[player].x = newPlayers[player].x;
+      players[player].y = newPlayers[player].y;
+      players[player].angle = newPlayers[player].angle;
       players[player].raster.position = new paper.Point(players[player].x, players[player].y);
       players[player].raster.rotate(angle);
     }
@@ -61,10 +62,36 @@ window.onload = function() {
     console.log("Created PowerUp", newPowerUp);
   });
 
-  socket.on('deletedPowerUp', (deletedPowerUp) => {
+  socket.on('powerUpDeleted', (deletedPowerUp) => {
     powerUps[deletedPowerUp.id].raster.remove();
     delete powerUps[deletedPowerUp.id];
     console.log("Deleted PowerUp", deletedPowerUp);
+  });
+  
+  socket.on('misilCreated', (newMisil) => {
+    misils[newMisil.id] = newMisil;
+    misils[newMisil.id].raster = new paper.Raster(`textures/powerups/misil.png`);
+    misils[newMisil.id].raster.position = new paper.Point(newMisil.x, newMisil.y);
+    misils[newMisil.id].raster.rotate(angle);
+    misils[newMisil.id].raster.sendToBack();
+    console.log("Created Misil", newMisil);
+  });
+
+  socket.on('misilDeleted', (deletedMisil) => {
+    misils[deletedMisil.id].raster.remove();
+    delete misils[deletedMisil.id];
+    console.log("Deleted Misil", deletedMisil);
+  });
+
+  socket.on('misilsUpdate', (newMisil) => {
+    for(var misil in newMisil) {
+      var angle = newMisil[misil].angle - misils[misil].angle;
+      misils[misil].x = newMisil[misil].x;
+      misils[misil].y = newMisil[misil].y;
+      misils[misil].angle = newMisil[misil].angle;
+      misils[misil].raster.position = new paper.Point(misils[misil].x, misils[misil].y);
+      misils[misil].raster.rotate(angle);
+    }
   });
 
 
