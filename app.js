@@ -21,8 +21,7 @@ setInterval(() => {repopulateTrash()}, 100);
 setInterval(() => {repopulatePowerUp()}, 1500);
 
 const skins = ["real1","real2","real3","real4","real5","real6","real7","real8","real9","real10"].sort(() => {return .5 - Math.random();});
-var leftSkins = [];
-fillLeftSkins();
+var skinI = 0;
 var names = ["Roomba","Bissell ","Miele","Shark","Dirt Devil","Miele","Hoover","Dyson","Niceeshop ","Oreck","Biene"].sort(() => {return .5 - Math.random();});
 var nameI = 0;
 var trashFrecSum   = sumFrec(game.trashTypes);
@@ -40,8 +39,7 @@ io.on('connection', (socket) => {
 
   var player = game.players[socket.id];
   player.id  = socket.id;
-  if(leftSkins.length == 0) fillLeftSkins();
-  player.type = leftSkins.pop();
+  player.type = skins[skinI]; skinI = (skinI+1) % skins.length;
   player.name = names[nameI]; nameI = (nameI+1) % names.length;
   player.x    = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
   player.y    = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
@@ -51,7 +49,6 @@ io.on('connection', (socket) => {
   sendPuntuation();
   // Recive info from the controller
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
-                                        leftSkins.push(player.type);
                                         delete game.players[player.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });
   socket.on('rename', (name)       => { player.name = name; });
@@ -64,10 +61,6 @@ function sendGame(){
   if (Object.keys(game.misils).length > 0){
     io.emit('misilsUpdate',game.misils);
   }
-}
-
-function fillLeftSkins() {
-  for (var skin of skins) leftSkins.push(skin);
 }
 
 function sumFrec(types) {
