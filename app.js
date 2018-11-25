@@ -35,8 +35,8 @@ io.on('connection', (socket) => {
   player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
 
   io.emit('playerConnect', player);
-  for (var i = 0; i < game.trashes.length; ++i) {
-    socket.emit('trashCreated', game.trashes[i])
+  for (const trashId in game.trashes) {
+    socket.emit('trashCreated', game.trashes[trashId])
   }
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
                                         delete game.players[player.id] });
@@ -132,7 +132,7 @@ function addTrash() {
   /*
   TODO: La trash es random pero es pot superposar
   */
-  var id = ((new Date()).getTime() + '' game.trashes.length) >>> 0
+  var id = ((new Date()).getTime() + '' + game.trashes.length) >>> 0
     var newTrash = {
       "id": id,
       "x": Math.random()*game.map.width,
