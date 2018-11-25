@@ -60,17 +60,32 @@ function sendGame(){
 Aqui escriu l'Alvaro
 */
 
-function repopulateTrash() {
-  if(game.trashes.length < game.config.maxTrash) addTrash('paper');
+function repopulateTrash() {    
+  if(Object.keys(game.trashes).length < game.config.maxTrash) addTrash('paper');
 }
+function addTrash(type) {  
+  /*
+  TODO: La trash es random pero es pot superposar a un jugador
+  */
+    var newTrash = {
+      "id": (new Date()).getTime() + '' + Object.keys(game.trashes).length,
+      "x": Math.floor(Math.random()*(game.map.width - game.trashTypes[type].sizeX/2)),
+      "y": Math.floor(Math.random()*(game.map.height - game.trashTypes[type].sizeY/2)),
+      "type": type
+    };
 
+    game.trashes[newTrash.id] = newTrash;    
+    io.emit('trashCreated', newTrash);
+    console.log("Added trash", newTrash);
+}
 function addPowerUp(type) {
   var newPowerUp = {
+    "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
     "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].radius)),
     "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].radius)),
     "type": type
   };
-  game.powerUps.push(newPowerUp);
+  game.powerUps[newPowerUp.id] = newPowerUp;
 }
 
 function executePowerUp(player) {
@@ -124,22 +139,6 @@ function reverseMovePlayer(player) {
 function rotatePlayer(player) {
   player.angle += game.vacuumTypes[player.type].angularVelocity*player.angularVelocity*intervalTime;
   player.angle %= 360;
-}
-
-function addTrash(type) {  
-  /*
-  TODO: La trash es random pero es pot superposar a un jugador
-  */
-  var id = ((new Date()).getTime() + '' + game.trashes.length) >>> 0
-    var newTrash = {
-      "x": Math.floor(Math.random()*(game.map.width - game.trashTypes[type].sizeX/2)),
-      "y": Math.floor(Math.random()*(game.map.height - game.trashTypes[type].sizeY/2)),
-      "type": type
-    };
-
-    game.trashes[id] = newTrash;    
-    io.emit('trashCreated', newTrash);
-    console.log("Added trash", newTrash);
 }
 
 function checkCollisionsPlayers() {
