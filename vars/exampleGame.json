@@ -88,8 +88,8 @@
       "sizeX": 30,
       "sizeY": 30
     },
-    "misil": {
-      "frequency": 1000,
+    "misilOff": {
+      "frequency": 3,
       "uses": 1,
       "sizeX": 30,
       "sizeY": 30,
@@ -112,7 +112,7 @@
   },
   "map": {
     "id": 1,
-    "name": "Dinning Room",
+    "name": "dinningRoom",
     "width": 1000,
     "height": 600
   },
