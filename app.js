@@ -17,13 +17,16 @@ var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
 var intervalTime = game.config.intervalTime;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
-setInterval(() => {tryTrash()}, 100);
-setInterval(() => {tryPowerUp()}, 1500);
+setInterval(() => {repopulateTrash()}, 100);
+setInterval(() => {repopulatePowerUp()}, 1500);
+
 const skins = ["real1","real2","real3","real4"];
-var names = ["Roomba","Bissell ","Miele","Shark","Dirt Devil","Miele","Hoover","Dyson","Niceeshop ","Oreck","Biene"].sort(() => {return .5 - Math.random();});
-var nameI = 0;
 var leftSkins = [];
 fillLeftSkins();
+var names = ["Roomba","Bissell ","Miele","Shark","Dirt Devil","Miele","Hoover","Dyson","Niceeshop ","Oreck","Biene"].sort(() => {return .5 - Math.random();});
+var nameI = 0;
+var trashFrecSum   = sumFrec(game.trashTypes);
+var powerUpFrecSum = sumFrec(game.powerUpTypes);
 
 // When a player connects
 io.on('connection', (socket) => {
@@ -59,7 +62,7 @@ io.on('connection', (socket) => {
 function sendGame(){
   io.emit('playersUpdate', game.players);
   if (Object.keys(game.misils).length > 0){
-    io.emit('misilUpdate',game.misils);
+    io.emit('misilsUpdate',game.misils);
   }
 }
 
@@ -67,21 +70,36 @@ function fillLeftSkins() {
   for (var skin of skins) leftSkins.push(skin);
 }
 
-function tryPowerUp(){
-  if(Math.random() < 0.3) {
-    if(Math.random() < 0.5) addPowerUp("turbo", 90);
-    else addPowerUp("misil", 1);
+function sumFrec(types) {
+  var sum = 0;
+  for (var type in types) sum += types[type].frequency;
+  return sum;
+}
+
+function getFrec(types, freq) {
+  var sum = 0;
+  for (var type in types){
+    if(freq >= sum && freq < sum + types[type].frequency) return type;
+    sum += types[type].frequency;
   }
 }
 
-function tryTrash(){
-  if(Math.random() < 0.09) {
-    repopulateTrash();
+function repopulatePowerUp(){
+  if(Math.random() < 0.3 && Object.keys(game.powerUps).length < game.config.maxPowerUp) {
+    var n = Math.floor(Math.random()*powerUpFrecSum);
+    if(n == powerUpFrecSum) powerUpFrecSum - 0.001;
+    addPowerUp(getFrec(game.powerUpTypes, n));
   }
 }
+
 function repopulateTrash() {    
-  if(Object.keys(game.trashes).length < game.config.maxTrash) addTrash('paper');
+  if(Math.random() < 0.05 && Object.keys(game.trashes).length < game.config.maxTrash) {
+    var n = Math.floor(Math.random()*trashFrecSum);
+    if(n == powerUpFrecSum) powerUpFrecSum - 0.001;
+    addTrash(getFrec(game.trashTypes, n));
+  }
 }
+
 function addTrash(type) {  
   /*
   TODO: La trash es random pero es pot superposar a un jugador
@@ -185,7 +203,7 @@ function shootMisil(player) {
     "angle": player.angle,
   };
   game.misils[newMisil.id] = newMisil;
-  io.emit("misilCreate",newMisil)
+  io.emit("misilCreated",newMisil)
 }
 
 function moveMisil(misil) {
@@ -197,7 +215,7 @@ function moveMisil(misil) {
 function checkIfMissilOut(misil) {
   if (misil.x < 0 || misil.x > game.map.width || misil.y < 0 || misil.y > game.map.height){
     delete game.misils[misil.id]
-    io.emit('misilDelete',misil);
+    io.emit('misilDeleted',misil);
   }
 }
 
@@ -305,7 +323,6 @@ function givePowerUp(player, powerUp){
 
 }
 
-
 function euclideanDist(x1,y1,x2,y2) {
   return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
 }
@@ -313,7 +330,6 @@ function euclideanDist(x1,y1,x2,y2) {
 function pointInCircle(xC,yC,rC,xP,yP) {
   return((xP-xC)*(xP-xC) + (yP-yC)*(yP-yC) <= rC*rC)
 }
-
 
 function playerPlayerCollision(player1,player2) {
 
@@ -339,6 +355,6 @@ function sendPuntuation() {
       "points": game.players[playerId].points
     });
   }
-  puntuation.sort((a,b) => { return a.points - b.points;});
+  puntuation.sort((a,b) => { return b.points - a.points;});
   io.emit('points', puntuation);
 }
