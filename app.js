@@ -166,7 +166,7 @@ function updateGame(){
     }
   }
   for(var misilId in game.misils) {
-    var misil = game.misil[misilId];
+    var misil = game.misils[misilId];
     moveMisil(misil);
     checkIfMissilOut(misil);
   }
@@ -190,13 +190,13 @@ function shootMisil(player) {
 
 function moveMisil(misil) {
   var distance = game.powerUpTypes["misil"].velocity*intervalTime;
-  player.x += Math.cos(misil.angle*2*Math.PI/360)*distance;
-  player.y += Math.sin(misil.angle*2*Math.PI/360)*distance;
+  misil.x += Math.cos(misil.angle*2*Math.PI/360)*distance;
+  misil.y += Math.sin(misil.angle*2*Math.PI/360)*distance;
 }
 
 function checkIfMissilOut(misil) {
   if (misil.x < 0 || misil.x > game.map.width || misil.y < 0 || misil.y > game.map.height){
-    delete misils[misil.id]
+    delete game.misils[misil.id]
     io.emit('misilDelete',misil);
   }
 }
