@@ -2,6 +2,14 @@
   "name": "vacuum-wars",
   "version": "0.0.1",
   "description": "Vacumm wars!",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mauriciabad/VacuumWars"
+  },
   "dependencies": {
     "express": "^4.16.4",
     "socket.io": "^2.1.1"
