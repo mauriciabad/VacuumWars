@@ -187,7 +187,6 @@ function checkCollisionsTrahses() {
       }
     }
   }
-<<<<<<< HEAD
   
   function checkCollisionsPowerUps() {
     for(var playerId in game.players) {
@@ -196,26 +195,18 @@ function checkCollisionsTrahses() {
         var powerUp = game.powerUps[powerUpId];
         if (playerTrashOrPowerUpCollision(player,powerUp)) {
           givePowerUp(player, powerUp);
-          io.emit('deletedPowerUp', powerUp);
+          io.emit('powerUpDeleted', powerUp);
           delete game.powerUps[powerUpId];
           console.log("Deleted PowerUp", powerUp);
         }
       }
     }
   }
-  
-function playerCollidesTop(player)   { return 20 > player.y }
-function playerCollidesBottom(player){ return 5 > game.map.height - player.y }
-function playerCollidesLeft(player)  { return 20 > player.x }
-function playerCollidesRight(player) { return 5  > game.map.width - player.x }
-=======
-}
 
 function playerCollidesTop(player)   { return game.vacuumTypes[player.type].radius > player.y }
 function playerCollidesBottom(player){ return game.vacuumTypes[player.type].radius - 15 > game.map.height - player.y }
 function playerCollidesLeft(player)  { return game.vacuumTypes[player.type].radius > player.x }
 function playerCollidesRight(player) { return game.vacuumTypes[player.type].radius - 15  > game.map.width - player.x }
->>>>>>> 89beaf6c2d6c70c14bb9d5152b6e11d67ccff60d
 
 
 function playerWallCollision(player) {

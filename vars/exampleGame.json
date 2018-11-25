@@ -37,7 +37,10 @@
   },
   "powerUpTypes": {
     "turbo": {
-      "uses": 90
+      "name":"turbo",
+      "uses": 90,
+      "sizeX": 30,
+      "sizeY": 30
     },
     "misil": {
       "name": "misil",
