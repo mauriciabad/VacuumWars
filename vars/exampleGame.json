@@ -11,7 +11,7 @@
       "texture": "textures/trash/paper.png"
     },
     "goldPaper":{
-      "points": 100,
+      "points": 50,
       "frequency": 1,
       "sizeX": 30,
       "sizeY": 30,
