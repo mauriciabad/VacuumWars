@@ -254,7 +254,13 @@ function moveMisil(misil) {
     d = Math.sqrt(vecx*vecx + vecy*vecy);
     vecx /= d;
     vecy /= d;
-    misil.angle = Math.atan(vecy/vecx)*180/Math.PI;
+    misil.angle = Math.atan(vecy/vecx)*360/(2*Math.PI);
+    if (vecx < 0 && vecy < 0) // quadrant Ⅲ
+      misil.angle = 180 + misil.angle;
+    else if (vecx < 0) // quadrant Ⅱ
+      misil.angle = 180 + misil.angle; // it actually substracts
+    else if (vecy < 0) // quadrant Ⅳ
+      misil.angle = 270 + (90 + misil.angle); // it actually substracts
     
   }
   misil.x += vecx*distance;
