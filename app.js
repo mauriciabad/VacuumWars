@@ -16,10 +16,10 @@ var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
 var intervalTime = 1000/60;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
-setInterval(() => {tryTrash()}, intervalTime/6);
+setInterval(() => {tryTrash()}, intervalTime/7);
 
 function tryTrash(){
-  if(Math.random() < 0.01) {
+  if(Math.random() < 0.005) {
     repopulateTrash();
   }
 }
@@ -53,7 +53,6 @@ Aqui escriu el Mauri
 
 function sendGame(){
   io.emit('playersUpdate', game.players);
-  io.emit('trashes',game.trashes)  
 }
 
 
@@ -62,30 +61,28 @@ Aqui escriu l'Alvaro
 */
 
 function repopulateTrash() {
-  if(game.trashes.length < game.config.maxTrash) addTrash();
+  if(game.trashes.length < game.config.maxTrash) addTrash('paper');
 }
 
-function addPowerUp() {
-  var randx = Math.random();
-  var randy = Math.random();
-  randx = randx*game.map.width;
-  randy = randy*game.map.height;
-  var json = {"x": randx, "y": randy, "type":"turbo"}
-  game.powerUps.push(json);
+function addPowerUp(type) {
+  var newPowerUp = {
+    "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].radius)),
+    "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].radius)),
+    "type": type
+  };
+  game.powerUps.push(newPowerUp);
 }
 
-function executePowerUp(player, duration) {
-  var powerUp = player.powerUp;
-  if(duration > 0){ //Si el powerup encara dura.
-    switch (powerUp) {
-      case "turbo":
-        player.angularVelocity = 1.5;
-        player.linearVelocity = 1.5;
-        player.usesLeft -= 1;
-        break;
-    
-      default:
-        break;
+function executePowerUp(player) {
+  if (player.powerUp != null) {
+    if(player.powerUpUsesLeft > 0){
+      switch (player.powerUp) {
+        case "turbo":
+          player.angularVelocity = 1.5;
+          player.linearVelocity = 1.5;
+          player.usesLeft -= 1;
+          break;
+      }
     }
   }
 }
@@ -93,7 +90,7 @@ function executePowerUp(player, duration) {
 function checkActions() {
   for (const playerId in game.players) {
     var player = game.players[playerId];
-    if (player.isActing) executePowerUp(player); //Mirar si no es null
+    if (player.isActing) executePowerUp(player);
   }
 }
 
@@ -108,7 +105,7 @@ function updateGame(){
   checkCollisionsTrahses();
   checkCollisionsPowerUps();
   checkActions();
-  if(Math.random() > 0.95) addPowerUp();
+  if(Math.random() < 0.05) addPowerUp('turbo');
   //respawn
 }
 
@@ -129,14 +126,14 @@ function rotatePlayer(player) {
   player.angle %= 360;
 }
 
-function addTrash() {  
+function addTrash(type) {  
   /*
-  TODO: La trash es random pero es pot superposar
+  TODO: La trash es random pero es pot superposar a un jugador
   */
     var newTrash = {
-      "x": Math.random()*game.map.width,
-      "y": Math.random()*game.map.height,
-      "type": "paper"
+      "x": Math.floor(Math.random()*(game.map.width - game.trashTypes[type].sizeX/2)),
+      "y": Math.floor(Math.random()*(game.map.height - game.trashTypes[type].sizeY/2)),
+      "type": type
     };
 
     game.trashes.push(newTrash);    
@@ -179,43 +176,25 @@ function checkCollisionsTrahses() {
   }
 }
 
-function playerCollidesTop(player) {
-  return (20 > player.y)
-}
-
-function playerCollidesBot(player) {
-  return (20 > game.map.height - player.y)
-}
-
-function playerCollidesLeft(player) {
-
-  return (20 > player.x)
-}
-
-function playerCollidesRight(player) {
-  return (20 > game.map.width - player.x)
-}
-
+function playerCollidesTop(player)   { return 20 > player.y }
+function playerCollidesBottom(player){ return 20 > game.map.height - player.y }
+function playerCollidesLeft(player)  { return 20 > player.x }
+function playerCollidesRight(player) { return 20 > game.map.width - player.x }
 function playerWallCollision(player) {
-  return (  playerCollidesTop(player) ||
-            playerCollidesBot(player) ||
-            playerCollidesLeft(player) ||
-            playerCollidesRight(player)
-            );
+  return playerCollidesTop(player)  || playerCollidesBottom(player) ||
+         playerCollidesLeft(player) || playerCollidesRight(player) ;
 }
 
 function checkCollisionsPowerUps() {
-  var broadcast = false
   for(const playerId in game.players) {
     var player = game.players[playerId];
-    for(const powerUp in game.powerUps) {
+    for(const powerUpId in game.powerUps) {
+      var powerUp = game.powerUps[powerUpId];
       if (playerTrashOrPowerUpCollision(player,powerUp)) {
-        delete game.powerUps[powerUp];
+        givePowerUp(player, powerUp);
+        delete game.powerUps[powerUpId];
       }
     }
-  }
-  if (broadcast) {
-    io.emit('powerUps',game.powerUps)
   }
 }
 

@@ -17,14 +17,14 @@ window.onload = function() {
   socket.on('playerDisconnect', (disconnectedPlayer) => {
     players[disconnectedPlayer.id].raster.remove();
     delete players[disconnectedPlayer.id];
-    console.log("Disconnected", disconnectedPlayer);
+    console.log("Disconnected Player", disconnectedPlayer);
   });
   socket.on('playerConnect', (connectedPlayer) => {    
     players[connectedPlayer.id] = connectedPlayer;
     players[connectedPlayer.id].raster = new paper.Raster(`textures/vacuum/${connectedPlayer.type}.png`);
     players[connectedPlayer.id].raster.position = new paper.Point(connectedPlayer.x, connectedPlayer.y);
     players[connectedPlayer.id].raster.rotate(90);
-    console.log("Connected", connectedPlayer);
+    console.log("Connected Player", connectedPlayer);
   });
   
   socket.on('playersUpdate', (newPlayers) => {
@@ -39,19 +39,14 @@ window.onload = function() {
   });
   
   socket.on('powerUps', (newPowerUps) => {
-    // powerUps = newPowerUps;
-    // for (const powerUp of powerUps) {
-    //   let i = powerUpsRaster.push(new paper.Raster(`textures/powerUp/${powerUp.type}.png`))  - 1;
-    //   powerUpsRaster[i].position = new paper.Point(powerUp.x, powerUp.y);
-    // }
   });
   
   socket.on('trashCreated', (newTrash) => {
-      console.log("New Trash!");
-      trashes[newTrash.id] = newTrash;
-      trashes[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
-      trashes[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
-      trashes[newTrash.id].raster.sendToBack();
+    trashes[newTrash.id] = newTrash;
+    trashes[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
+    trashes[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
+    trashes[newTrash.id].raster.sendToBack();
+    console.log("Created Trash", newTrash);
   });
 
 
