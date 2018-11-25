@@ -4,7 +4,7 @@ window.onload = function() {
 
 
 
-  var viewerPlays = true;
+  var viewerPlays = false;
   var socket   = io();
   var trashes  = {}; 
   var powerUps = {};
