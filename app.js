@@ -152,7 +152,7 @@ function executePowerUp(player) {
       updatePowerUpUses(player);
         break;
       
-      case "misil":
+      case "misilOff":
         if (player.powerUpUsesLeft > 0) shootMisil(player);
         updatePowerUpUses(player);
         break;
@@ -221,7 +221,7 @@ function calculateObjective(player1) {
     vec2y = player2.y - player1.y;
     d = Math.sqrt(vec2x*vec2x + vec2y*vec2y);
     angle = Math.acos((vec2x*vecx + vec2y*vecy)/d)*360/(2*Math.PI);
-    if (Math.abs(angle) < game.powerUpTypes["misil"].thresholdAngle ) {
+    if (Math.abs(angle) < game.powerUpTypes["misilOff"].thresholdAngle ) {
       return player2.id;
     }
   }
@@ -243,7 +243,7 @@ function shootMisil(player) {
 }
 
 function moveMisil(misil) {
-  var distance = game.powerUpTypes["misil"].velocity*intervalTime;
+  var distance = game.powerUpTypes["misilOff"].velocity*intervalTime;
   var vecx = Math.cos(misil.angle*2*Math.PI/360);
   var vecy = Math.sin(misil.angle*2*Math.PI/360);
   if (misil.target != null) {
@@ -253,8 +253,8 @@ function moveMisil(misil) {
     d2 = Math.sqrt(vec2x*vec2x + vec2y*vec2y);
     vec2x /= d2;
     vec2y /= d2;
-    vecx += vec2x*game.powerUpTypes["misil"].rate;
-    vecy += vec2y*game.powerUpTypes["misil"].rate;
+    vecx += vec2x*game.powerUpTypes["misilOff"].rate;
+    vecy += vec2y*game.powerUpTypes["misilOff"].rate;
     d = Math.sqrt(vecx*vecx + vecy*vecy);
     vecx /= d;
     vecy /= d;
