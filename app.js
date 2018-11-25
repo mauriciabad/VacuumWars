@@ -32,8 +32,8 @@ io.on('connection', (socket) => {
 
   var player = game.players[socket.id];
   player.id  = socket.id;
-  player.x   = Math.floor(Math.random()*game.map.width);
-  player.y   = Math.floor(Math.random()*game.map.height);
+  player.x   = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
+  player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
 
   io.emit('playerConnect', player);
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
