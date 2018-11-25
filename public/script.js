@@ -63,7 +63,6 @@ window.onload = function() {
       trashes[trash].x = newTrash[trash].x;
       trashes[trash].y = newTrash[trash].y;
       trashes[trash].raster.position = new paper.Point(trashes[trash].x, trashes[trash].y);
-      trashes[trash].raster.rotate(angle);
     }
   });
 
