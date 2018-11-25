@@ -8,91 +8,77 @@
       "points": 10,
       "frequency": 9,
       "sizeX": 30,
-      "sizeY": 30,
-      "texture": "textures/trash/paper.png"
+      "sizeY": 30
     },
     "goldPaper":{
       "points": 50,
       "frequency": 1,
       "sizeX": 30,
-      "sizeY": 30,
-      "texture": "textures/trash/goldPaper.png"
+      "sizeY": 30
     },
     "legoBig":{
-      "points": 3,
+      "points": 2,
       "frequency": 3,
       "sizeX": 30,
-      "sizeY": 30,
-      "texture": "textures/trash/lego1.png"
+      "sizeY": 30
     },
     "legoSmall":{
       "points": 1,
       "frequency": 3,
       "sizeX": 30,
-      "sizeY": 30,
-      "texture": "textures/trash/lego2.png"
+      "sizeY": 30
     }
   },
   "vacuumTypes": {
     "real1":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real1.png"
+      "radius": 20
     },
     "real2":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real2.png"
+      "radius": 20
     },
     "real3":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real3.png"
+      "radius": 20
     },
     "real4":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real4.png"
+      "radius": 20
     },
     "real5":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.4,
-      "radius": 20,
-      "texture": "textures/vacuum/real5.png"
+      "radius": 20
     },
     "real6":{
       "linearVelocity": 0.4,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real6.png"
+      "radius": 20
     },
     "real7":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real7.png"
+      "radius": 20
     },
     "real8":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real8.png"
+      "radius": 20
     },
     "real9":{
       "linearVelocity": 2,
       "angularVelocity": 0.6,
-      "radius": 20,
-      "texture": "textures/vacuum/real9.png"
+      "radius": 20
     },
     "real10":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 20,
-      "texture": "textures/vacuum/real10.png"
+      "radius": 20
     }
   },
   "powerUpTypes": {
@@ -119,8 +105,7 @@
     "id": 1,
     "name": "Dinning Room",
     "width": 1000,
-    "height": 600,
-    "texture": "textures/vacuum/dinnerRoom.png"
+    "height": 600
   },
   "states": {
     "colliding":{
