@@ -4,6 +4,7 @@ window.onload = function() {
 
 
 
+  var viewerPlays = false;
   var socket   = io();
   var trashes  = {}; 
   var powerUps = {};
@@ -116,32 +117,7 @@ window.onload = function() {
     }
   });
 
-
-  // this player movement
-  var tool = new paper.Tool();
-  tool.onKeyDown = function(event) {
-    switch (event.key) {
-      case 'space':
-      move(true, event);
-        break;
-      case 'enter':
-      action(true, event);
-        break;
-    }
-    return false;
-  }
-  tool.onKeyUp = function(event) {
-    switch (event.key) {
-      case 'space':
-      move(false, event);
-        break;
-      case 'enter':
-      action(false, event);
-        break;
-    }
-    return false;
-  }
-  
+    
   var scoreboard = document.getElementById('scoreboard');
   
   socket.on('points', (puntuation) => {
@@ -153,23 +129,51 @@ window.onload = function() {
     scoreboard.innerHTML = content;
   });
   
-  function move(isMoving, e) {
-    console.log('isMoving', isMoving);
-    e.preventDefault();
-    socket.emit('move', isMoving);
-  }
-  function action(isActing, e) {
-    console.log('isActing', isActing);
-    e.preventDefault();
-    socket.emit('active', isActing);
-  }
-  function rename(name) {
-    socket.emit('rename', name);      
-  }
-  function changeVacuum(vacuum) {
-    socket.emit('changeVacuum', vacuum);      
-  }
 
+  if(viewerPlays){
+    var tool = new paper.Tool();
+    tool.onKeyDown = function(event) {
+      switch (event.key) {
+        case 'space':
+        move(true, event);
+          break;
+        case 'enter':
+        action(true, event);
+          break;
+      }
+      return false;
+    }
+    tool.onKeyUp = function(event) {
+      switch (event.key) {
+        case 'space':
+        move(false, event);
+          break;
+        case 'enter':
+        action(false, event);
+          break;
+      }
+      return false;
+    }
+
+    function move(isMoving, e) {
+      console.log('isMoving', isMoving);
+      e.preventDefault();
+      socket.emit('move', isMoving);
+    }
+    function action(isActing, e) {
+      console.log('isActing', isActing);
+      e.preventDefault();
+      socket.emit('active', isActing);
+    }
+    function rename(name) {
+      socket.emit('rename', name);      
+    }
+    function changeVacuum(vacuum) {
+      socket.emit('changeVacuum', vacuum);      
+    }
+  } else {
+    socket.emit('ignoreMe', true);      
+  }
 
 
 
