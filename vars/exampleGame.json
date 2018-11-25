@@ -10,11 +10,29 @@
     }
   },
   "vacuumTypes": {
-    "real":{
+    "real1":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
       "radius": 30,
-      "texture": "textures/vacuum/real.png"
+      "texture": "textures/vacuum/real1.png"
+    },
+    "real2":{
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.5,
+      "radius": 30,
+      "texture": "textures/vacuum/real2.png"
+    },
+    "real3":{
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.5,
+      "radius": 30,
+      "texture": "textures/vacuum/real3.png"
+    },
+    "real4":{
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.5,
+      "radius": 30,
+      "texture": "textures/vacuum/real4.png"
     }
   },
   "powerUpTypes": {
@@ -24,7 +42,8 @@
   },
   "config": {
     "minTrash": 10,
-    "maxTrash": 25
+    "maxTrash": 25,
+    "intervalTime": 16.666666666666667
   },
   "map": {
     "id": 1,
