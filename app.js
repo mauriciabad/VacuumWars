@@ -129,7 +129,6 @@ function executePowerUp(player) {
       case "turbo":
       player.angularVelocity = 2;
       player.linearVelocity = 3;
-      console.log(player.powerUpUsesLeft);
       updatePowerUpUses(player);
         break;
       
