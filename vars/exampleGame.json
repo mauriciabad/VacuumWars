@@ -17,6 +17,20 @@
       "sizeX": 30,
       "sizeY": 30,
       "texture": "textures/trash/goldPaper.png"
+    },
+    "legoBig":{
+      "points": 3,
+      "frequency": 3,
+      "sizeX": 30,
+      "sizeY": 30,
+      "texture": "textures/trash/lego1.png"
+    },
+    "legoSmall":{
+      "points": 1,
+      "frequency": 3,
+      "sizeX": 30,
+      "sizeY": 30,
+      "texture": "textures/trash/lego2.png"
     }
   },
   "vacuumTypes": {

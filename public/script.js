@@ -65,7 +65,7 @@ window.onload = function() {
   
   socket.on('powerUpCreated', (newPowerUp) => {
     powerUps[newPowerUp.id] = newPowerUp;
-    powerUps[newPowerUp.id].rotationSpeed = 2*(Math.random() - 0.5)*5;
+    powerUps[newPowerUp.id].rotationSpeed = 2 + 2*Math.random();
     powerUps[newPowerUp.id].raster = new paper.Raster(`textures/powerups/${newPowerUp.type}.png`);
     powerUps[newPowerUp.id].raster.position = new paper.Point(newPowerUp.x, newPowerUp.y);
     powerUps[newPowerUp.id].raster.sendToBack();
