@@ -49,6 +49,11 @@ window.onload = function() {
     console.log("Created Trash", newTrash);
   });
 
+  socket.on('deleteTrash', (deleteTrash) => {
+    trashes[deleteTrash.id].raster.remove();
+    delete trashes[deleteTrash.id];
+  });
+
 
   // this player movement
   var tool = new paper.Tool();

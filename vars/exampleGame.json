@@ -1,19 +1,7 @@
 {
   "players": {},
-  "trashes": [
-    {
-      "x": 40,
-      "y": 120,
-      "type": "paper"
-    }
-  ],
-  "powerUps": [
-    {
-      "type": "turbo",
-      "x": 612,
-      "y": 201
-    }
-  ],
+  "trashes": {},
+  "powerUps": {},
   "trashTypes": {
     "paper":{
       "sizeX": 30,
