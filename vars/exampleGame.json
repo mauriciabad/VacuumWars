@@ -61,7 +61,7 @@
     }
   },
   "config": {
-    "minTrash": 10,
+    "maxPowerUp": 5,
     "maxTrash": 25,
     "intervalTime": 16.666666666666667
   },

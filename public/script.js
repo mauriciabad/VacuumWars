@@ -32,13 +32,22 @@ window.onload = function() {
   socket.on('playersUpdate', (newPlayers) => {
     for(var player in newPlayers) {
       var angle = newPlayers[player].angle - players[player].angle;
-      players[player].x = newPlayers[player].x;
-      players[player].y = newPlayers[player].y;
+      players[player].x = newPlayers[player].x + 2*(0.5 - Math.random())*2;
+      players[player].y = newPlayers[player].y + 2*(0.5 - Math.random())*2;
       players[player].angle = newPlayers[player].angle;
       players[player].raster.position = new paper.Point(players[player].x, players[player].y);
       players[player].raster.rotate(angle);
+
+
+      animatePowerUps();
     }
   });
+
+  function animatePowerUps() {
+    for (var powerUpId in powerUps) {
+      powerUps[powerUpId].raster.rotate(2*Math.random());
+    }
+  }
   
   socket.on('trashCreated', (newTrash) => {
     trashes[newTrash.id] = newTrash;
