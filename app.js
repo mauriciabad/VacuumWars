@@ -153,6 +153,9 @@ function checkCollisionsPlayers() {
         }
       }
     }
+    if (playerWallCollision(player1)) {
+      reverseMovePlayer(player1)
+    }
 
   }
 }
@@ -171,6 +174,31 @@ function checkCollisionsTrahses() {
   if (broadcast) {
     io.emit('trashes',game.trashes)
   }
+}
+
+function playerCollidesTop(player) {
+  return (20 > player.y)
+}
+
+function playerCollidesBot(player) {
+  return (20 > game.map.height - player.y)
+}
+
+function playerCollidesLeft(player) {
+
+  return (20 > player.x)
+}
+
+function playerCollidesRight(player) {
+  return (20 > game.map.width - player.x)
+}
+
+function playerWallCollision(player) {
+  return (  playerCollidesTop(player) ||
+            playerCollidesBot(player) ||
+            playerCollidesLeft(player) ||
+            playerCollidesRight(player)
+            );
 }
 
 function checkCollisionsPowerUps() {
@@ -205,8 +233,8 @@ function playerPlayerCollision(player1,player2) {
 }
 
 function playerTrashOrPowerUpCollision(player,object) {
-  var moveX = 10/2
-  var moveY = 10/2
+  var moveX = game.vacuumTypes[player.type].sizeX/2
+  var moveY = game.vacuumTypes[player.type].sizeY/2
   return( pointInCircle(player.x,player.y,20, object.x + moveX, object.y + moveY) ||
           pointInCircle(player.x,player.y,20, object.x + moveX, object.y - moveY) ||
           pointInCircle(player.x,player.y,20, object.x - moveX, object.y + moveY) ||
