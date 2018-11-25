@@ -88,8 +88,8 @@
       "sizeX": 30,
       "sizeY": 30
     },
-    "misilOff": {
-      "frequency": 3,
+    "misil": {
+      "frequency": 1000,
       "uses": 1,
       "sizeX": 30,
       "sizeY": 30,
