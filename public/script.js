@@ -5,8 +5,8 @@ window.onload = function() {
 
 
   var socket   = io();
-  var trashes  = []; 
-  var powerUps = [];
+  var trashes  = {}; 
+  var powerUps = {};
   var players  = {};
   
   socket.on('setup', (game) => {
