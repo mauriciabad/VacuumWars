@@ -16,9 +16,13 @@ var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
 var intervalTime = 1000/60;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
+setInterval(() => {tryTrash()}, intervalTime/5);
 
-if(Math.random() < 0.1) {
-  repopulateTrash();
+function tryTrash(){
+  if(Math.random() < 0.02) {
+    console.log("repopulate trash");
+    repopulateTrash();
+  }
 }
 
 
