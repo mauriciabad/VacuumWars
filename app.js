@@ -17,6 +17,11 @@ var intervalTime = 1000/60;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
 
+if(Math.random() < 0.1) {
+  repopulateTrash();
+}
+
+
 // When a player connects
 io.on('connection', (socket) => {
   game.players[socket.id] = JSON.parse(fs.readFileSync("vars/defaultPlayer.json"));
@@ -51,9 +56,7 @@ Aqui escriu l'Alvaro
 */
 
 function repopulateTrash() {
-  if(game.trashes.length < game.config.minTrash){
-    addTrash(game.config.minTrash - game.trashes.length);
-  }
+    addTrash();
 }
 
 function addPowerUp() {
@@ -63,11 +66,6 @@ function addPowerUp() {
   randy = randy*game.map.height;
   var json = {"x": randx, "y": randy, "type":"turbo"}
   game.powerUps.push(json);
-}
-
-function repopulatePowerUp() {
-  var prob = Math.random();
-  if(prob > 0.95) addPowerUp();
 }
 
 function executePowerUp(player, duration) {
@@ -104,8 +102,7 @@ function updateGame(){
   checkCollisionsTrahses();
   checkCollisionsPowerUps();
   checkActions();
-  repopulatePowerUp();
-  repopulateTrash();
+  if(Math.random() > 0.95) addPowerUp();
   //respawn
 }
 
@@ -126,17 +123,18 @@ function rotatePlayer(player) {
   player.angle %= 360;
 }
 
-function addTrash(toAdd) {
+function addTrash() {
   /*
   TODO: La trash es random pero es pot superposar
   */
-  while (toAdd--) {
-      game.trashes.push({
-        "x": Math.random()*game.map.width,
-        "y": Math.random()*game.map.height,
-        "type": "paper"
-      })
-  }
+    var newTrash = {
+      "x": Math.random()*game.map.width,
+      "y": Math.random()*game.map.height,
+      "type": "paper"
+    };
+
+    game.trashes.push(newTrash);    
+    io.emit('trashCreated', newTrash);
 }
 
 function checkCollisionsPlayers() {
