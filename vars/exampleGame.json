@@ -42,6 +42,12 @@
       "sizeX": 30,
       "sizeY": 30,
       "uses": 90
+    },
+    "misil": {
+      "name": "misil",
+      "sizeX": 30,
+      "sizeY": 30,
+      "uses": 1
     }
   },
   "config": {

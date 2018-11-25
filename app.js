@@ -64,7 +64,7 @@ function fillLeftSkins() {
 function tryPowerUp(){
   if(Math.random() < 0.3) {
     if(Math.random() < 0.5) addPowerUp("turbo");
-    else addPowerUp("missil");
+    else addPowerUp("misil");
   }
 }
 
@@ -137,7 +137,6 @@ function updateGame(){
   checkCollisionsTrahses();
   checkCollisionsPowerUps();
   checkActions();
-  if(Math.random() < 0.05) addPowerUp('turbo');
   //respawn
 }
 
@@ -184,10 +183,25 @@ function checkCollisionsTrahses() {
         io.emit("trashDeleted",trash);
         delete game.trashes[trashId];
         console.log("Deleted Trash", trash);      }
+      }
     }
   }
-}
-
+  
+  function checkCollisionsPowerUps() {
+    for(var playerId in game.players) {
+      var player = game.players[playerId];
+      for(var powerUpId in game.powerUps) {
+        var powerUp = game.powerUps[powerUpId];
+        if (playerTrashOrPowerUpCollision(player,powerUp)) {
+          givePowerUp(player, powerUp);
+          io.emit('deletedPowerUp', powerUp);
+          delete game.powerUps[powerUpId];
+          console.log("Deleted PowerUp", powerUp);
+        }
+      }
+    }
+  }
+  
 function playerCollidesTop(player)   { return 20 > player.y }
 function playerCollidesBottom(player){ return 5 > game.map.height - player.y }
 function playerCollidesLeft(player)  { return 20 > player.x }
@@ -212,19 +226,6 @@ function givePowerUp(player, powerUp){
 
 }
 
-function checkCollisionsPowerUps() {
-  for(var playerId in game.players) {
-    var player = game.players[playerId];
-    for(var powerUpId in game.powerUps) {
-      var powerUp = game.powerUps[powerUpId];
-      if (playerTrashOrPowerUpCollision(player,powerUp)) {
-        givePowerUp(player, powerUp);
-        io.emit('deletedPowerUp', game.powerUps[powerUpId]);
-        delete game.powerUps[powerUpId];
-      }
-    }
-  }
-}
 
 function euclideanDist(x1,y1,x2,y2) {
   return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
