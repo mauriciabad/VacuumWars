@@ -214,8 +214,17 @@ function moveMisil(misil) {
 
 function checkIfMissilOut(misil) {
   if (misil.x < 0 || misil.x > game.map.width || misil.y < 0 || misil.y > game.map.height){
-    delete game.misils[misil.id]
+    delete game.misils[misil.id];
     io.emit('misilDeleted',misil);
+  } else {
+    for (var playerId in game.players) {
+      var player = game.players[playerId];
+      if (euclideanDist(player.x,player.y,misil.x,misil.y) <= (game.vacuumTypes[player.type].radius + 8)){
+        player.points -= 200;
+        delete game.misils[misil.id];
+        io.emit('misilDeleted',misil);
+      }
+    }
   }
 }
 
