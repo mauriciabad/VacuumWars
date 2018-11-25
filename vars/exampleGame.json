@@ -83,24 +83,24 @@
   },
   "powerUpTypes": {
     "turbo": {
-      "frequency": 1,
+      "frequency": 2,
       "uses": 90,
       "sizeX": 30,
       "sizeY": 30
     },
     "misil": {
-      "frequency": 1,
+      "frequency": 3,
       "uses": 1,
       "sizeX": 30,
       "sizeY": 30,
       "velocity": 1
     },
     "magnet": {
-      "frequency": 100,
-      "atract": 10,
+      "frequency": 1,
+      "atract": 100,
       "sizeX": 30,
       "sizeY": 30,
-      "uses": 120
+      "uses": 150
     }
   },
   "config": {
