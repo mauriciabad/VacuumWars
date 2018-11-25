@@ -44,12 +44,11 @@ window.onload = function() {
     // }
   });
   
-  socket.on('trashes', (newTrashes) => {
-    // trashes = newTrashes;
-    // for (const trash of trashes) {
-    //   let i = trashesRaster.push(new paper.Raster(`textures/trash/${trash.type}.png`))  - 1;
-    //   trashesRaster[i].position = new paper.Point(trash.x, trash.y);
-    // }
+  socket.on('trashCreated', (newTrash) => {
+      console.log("New Trash!");
+      players[newTrash.id] = newTrash;
+      players[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
+      players[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
   });
 
 
