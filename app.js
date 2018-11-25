@@ -92,7 +92,6 @@ function addTrash(type) {
     console.log("Added trash", newTrash);
 }
 function addPowerUp(type) { //Adds a power up to Power up vectors
-  console.log(Object.keys(game.powerUps).length);
   if(Object.keys(game.powerUps).length < 3){
     var newPowerUp = {
       "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
@@ -100,7 +99,7 @@ function addPowerUp(type) { //Adds a power up to Power up vectors
       "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].sizeY/2)),
       "type": type
     };
-    console.log("Added powerup " +newPowerUp);
+    console.log(newPowerUp);
     game.powerUps[newPowerUp.id] = newPowerUp;
     io.emit('powerUpCreated', newPowerUp);
   }
@@ -205,6 +204,12 @@ function playerWallCollision(player) {
   } else if (playerCollidesRight(player)) {
     player.angle = 180 - player.angle
   }
+}
+
+function givePowerUp(player, powerUp){
+  player.powerUp = powerUp.name;
+  player.powerUpUsesLeft = powerUp.uses;
+
 }
 
 function checkCollisionsPowerUps() {
