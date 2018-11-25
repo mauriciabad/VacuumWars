@@ -149,6 +149,9 @@ function checkCollisionsPlayers() {
         }
       }
     }
+    if (playerWallCollision(player1)) {
+      reverseMovePlayer(player1)
+    }
 
   }
 }
@@ -167,6 +170,31 @@ function checkCollisionsTrahses() {
   if (broadcast) {
     io.emit('trashes',game.trashes)
   }
+}
+
+function playerCollidesTop(player) {
+  return (20 > player.y)
+}
+
+function playerCollidesBot(player) {
+  return (20 > game.map.height - player.y)
+}
+
+function playerCollidesLeft(player) {
+
+  return (20 > player.x)
+}
+
+function playerCollidesRight(player) {
+  return (20 > game.map.width - player.x)
+}
+
+function playerWallCollision(player) {
+  return (  playerCollidesTop(player) ||
+            playerCollidesBot(player) ||
+            playerCollidesLeft(player) ||
+            playerCollidesRight(player)
+            );
 }
 
 function checkCollisionsPowerUps() {

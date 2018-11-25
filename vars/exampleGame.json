@@ -40,7 +40,7 @@
   "map": {
     "id": 1,
     "name": "Dinning Room",
-    "width": 600,
+    "width": 1200,
     "height": 600,
     "texture": "textures/vacuum/dinnerRoom.png"
   }
