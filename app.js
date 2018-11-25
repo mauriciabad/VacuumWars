@@ -129,8 +129,15 @@ function checkActions() {
 function updateGame(){
   for(var playerId in game.players) {
     var player = game.players[playerId];
-    if (player.isMoving) movePlayer(player);
-    else rotatePlayer(player);
+    if (player.state == "colliding") {
+      movePlayer(player);
+      player.penalitzation -= 1;
+      if (player.penalitzation < 0) player.state = "alive";
+    }
+    else if (player.state == "alive") {
+      if (player.isMoving) movePlayer(player);
+      else rotatePlayer(player);
+    }
   }
 
   checkCollisionsPlayers();
@@ -157,15 +164,26 @@ function rotatePlayer(player) {
   player.angle %= 360;
 }
 
+function setPlayersColliding(player1, player2) {
+  player1.state = "colliding";
+  player1.penalitzation = game.states[player1.state].penalitzation;
+  player2.state = "colliding";
+  player2.penalitzation = game.states[player2.state].penalitzation;
+  reverseMovePlayer(player1);
+  reverseMovePlayer(player2);
+  var angle = Math.atan((player1.y - player2.y)/(player1.x - player2.x))*360/(2*Math.PI);
+  player1.angle = angle;
+  player2.angle = 180 - angle;
+}
+
 function checkCollisionsPlayers() {
   for(var playerId1 in game.players) {
     var player1 = game.players[playerId1]
     for(var playerId2 in game.players) {
       if (playerId1 != playerId2) {
-        var player2 = game.players[playerId2]
-        if (playerPlayerCollision(player1,player2)) {
-          reverseMovePlayer(player1)
-          reverseMovePlayer(player2)
+        var player2 = game.players[playerId2];
+        if (playerPlayerCollision(player1,player2) && (player1.state != "colliding" && player2.state != "colliding")) {
+          setPlayersColliding(player1,player2);
         }
       }
     }
@@ -187,35 +205,27 @@ function checkCollisionsTrahses() {
       }
     }
   }
-<<<<<<< HEAD
   
-  function checkCollisionsPowerUps() {
-    for(var playerId in game.players) {
-      var player = game.players[playerId];
-      for(var powerUpId in game.powerUps) {
-        var powerUp = game.powerUps[powerUpId];
-        if (playerTrashOrPowerUpCollision(player,powerUp)) {
-          givePowerUp(player, powerUp);
-          io.emit('deletedPowerUp', powerUp);
-          delete game.powerUps[powerUpId];
-          console.log("Deleted PowerUp", powerUp);
-        }
+function checkCollisionsPowerUps() {
+  for(var playerId in game.players) {
+    var player = game.players[playerId];
+    for(var powerUpId in game.powerUps) {
+      var powerUp = game.powerUps[powerUpId];
+      if (playerTrashOrPowerUpCollision(player,powerUp)) {
+        givePowerUp(player, powerUp);
+        io.emit('deletedPowerUp', powerUp);
+        delete game.powerUps[powerUpId];
+        console.log("Deleted PowerUp", powerUp);
       }
     }
   }
-  
-function playerCollidesTop(player)   { return 20 > player.y }
-function playerCollidesBottom(player){ return 5 > game.map.height - player.y }
-function playerCollidesLeft(player)  { return 20 > player.x }
-function playerCollidesRight(player) { return 5  > game.map.width - player.x }
-=======
 }
+  
 
 function playerCollidesTop(player)   { return game.vacuumTypes[player.type].radius > player.y }
 function playerCollidesBottom(player){ return game.vacuumTypes[player.type].radius - 15 > game.map.height - player.y }
 function playerCollidesLeft(player)  { return game.vacuumTypes[player.type].radius > player.x }
 function playerCollidesRight(player) { return game.vacuumTypes[player.type].radius - 15  > game.map.width - player.x }
->>>>>>> 89beaf6c2d6c70c14bb9d5152b6e11d67ccff60d
 
 
 function playerWallCollision(player) {
@@ -247,10 +257,8 @@ function pointInCircle(xC,yC,rC,xP,yP) {
 
 
 function playerPlayerCollision(player1,player2) {
-  /*
-  TODO: posar be el radius pq esta harcodeado
-  */
-  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) <= 2*(game.vacuumTypes[player.type].radius));
+
+  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) <= 2*(game.vacuumTypes[player1.type].radius));
 }
 
 function playerTrashOrPowerUpCollision(player,object) {  

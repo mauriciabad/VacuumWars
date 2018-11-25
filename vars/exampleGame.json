@@ -57,5 +57,10 @@
     "width": 600,
     "height": 600,
     "texture": "textures/vacuum/dinnerRoom.png"
+  },
+  "states": {
+    "colliding":{
+      "penalitzation": 15
+    }
   }
 }
