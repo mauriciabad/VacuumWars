@@ -49,11 +49,15 @@ io.on('connection', (socket) => {
   sendPuntuation();
   // Recive info from the controller
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
-                                        delete game.players[player.id] });
+                                        delete game.players[player.id]
+                                        sendPuntuation(); });
   socket.on('changeVacuum', (type) => { player.type = type; });
   socket.on('rename', (name)       => { player.name = name; });
   socket.on('move',   (isMoving)   => { player.isMoving = isMoving; });
   socket.on('active', (isActing)   => { player.isActing = isActing; });
+  socket.on('ignoreMe', (isIgnored)=> { io.emit('playerDisconnect', player);
+                                        delete game.players[player.id]
+                                        sendPuntuation(); });
 });
 
 function sendGame(){
