@@ -17,8 +17,8 @@
       "texture": "textures/vacuum/real1.png"
     },
     "real2":{
-      "linearVelocity": 0.5,
-      "angularVelocity": 0.5,
+      "linearVelocity": 0.75,
+      "angularVelocity": 0.25,
       "radius": 30,
       "texture": "textures/vacuum/real2.png"
     },
@@ -37,12 +37,14 @@
   },
   "powerUpTypes": {
     "turbo": {
+      "sizeX": 30,
+      "sizeY": 30,
       "uses": 90
     }
   },
   "config": {
-    "minTrash": 10,
     "maxTrash": 25,
+    "maxPowerUps": 4,
     "intervalTime": 16.666666666666667
   },
   "map": {
