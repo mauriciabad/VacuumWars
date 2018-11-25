@@ -4,6 +4,7 @@
   "powerUps": {},
   "trashTypes": {
     "paper":{
+      "name": "paper",
       "sizeX": 30,
       "sizeY": 30,
       "texture": "textures/trash/paper.png"
@@ -37,6 +38,7 @@
   },
   "powerUpTypes": {
     "turbo": {
+      "name": "turbo",
       "sizeX": 30,
       "sizeY": 30,
       "uses": 90
