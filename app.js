@@ -231,6 +231,7 @@ function checkCollisionsTrahses() {
       }
     }
   }
+}
 
 function checkCollisionsPowerUps() {
   for(var playerId in game.players) {
