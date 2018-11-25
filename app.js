@@ -25,7 +25,6 @@ var nameI = 0;
 var leftSkins = [];
 fillLeftSkins();
 
-
 // When a player connects
 io.on('connection', (socket) => {
   // Send current state to client
@@ -41,11 +40,12 @@ io.on('connection', (socket) => {
   if(leftSkins.length == 0) fillLeftSkins();
   player.type = leftSkins.pop();
   player.name = names[nameI]; nameI = (nameI+1) % names.length;
-  player.x   = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
-  player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
+  player.x    = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
+  player.y    = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
   player.points = 0
   // Send to others that i exist
   io.emit('playerConnect', player);
+  sendPuntuation();
   // Recive info from the controller
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
                                         leftSkins.push(player.type);
@@ -129,7 +129,6 @@ function executePowerUp(player) {
       case "turbo":
       player.angularVelocity = 2;
       player.linearVelocity = 3;
-      console.log(player.powerUpUsesLeft);
       updatePowerUpUses(player);
         break;
       
@@ -222,7 +221,6 @@ function checkCollisionsTrahses() {
     for(var trashId in game.trashes) {
       var trash = game.trashes[trashId];
       if (playerTrashOrPowerUpCollision(player,trash)) {
-        player.points += 1;
         io.emit("trashDeleted",trash);
         delete game.trashes[trashId];
         player.points += game.trashTypes[trash.type].points;
@@ -240,7 +238,7 @@ function checkCollisionsPowerUps() {
       var powerUp = game.powerUps[powerUpId];
       if (playerTrashOrPowerUpCollision(player,powerUp)) {
         givePowerUp(player, powerUp);
-        io.emit('deletedPowerUp', powerUp);
+        io.emit('powerUpDeleted', powerUp);
         delete game.powerUps[powerUpId];
         console.log("Deleted PowerUp", powerUp);
       }
@@ -255,13 +253,17 @@ function playerCollidesRight(player) { return game.vacuumTypes[player.type].radi
 
 function playerWallCollision(player) {
   if (playerCollidesTop(player)) {
-    player.angle = - player.angle
+    player.angle = - player.angle;
+    player.y += 10;
   } else if (playerCollidesBottom(player)) {
-    player.angle = - player.angle
+    player.angle = - player.angle;
+    player.y -= 10;
   } else if (playerCollidesLeft(player)) {
-    player.angle = 180 - player.angle
+    player.angle = 180 - player.angle;
+    player.x += 10;
   } else if (playerCollidesRight(player)) {
-    player.angle = 180 - player.angle
+    player.angle = 180 - player.angle;
+    player.x -= 10;
   }
 }
 
