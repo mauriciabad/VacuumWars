@@ -112,7 +112,7 @@
   },
   "map": {
     "id": 1,
-    "name": "Dinning Room",
+    "name": "dinningRoom",
     "width": 1000,
     "height": 600
   },

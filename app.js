@@ -232,7 +232,6 @@ function shootMisil(player) {
     "x": 5 + player.x + game.vacuumTypes[player.type].radius*Math.cos(player.angle*2*Math.PI/360),
     "y": 5 + player.y + game.vacuumTypes[player.type].radius*Math.sin(player.angle*2*Math.PI/360),
     "angle": player.angle,
-    "angle2": player.angle,
     "owner": player.id,
     "target": calculateObjective(player)
   };
