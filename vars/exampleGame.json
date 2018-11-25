@@ -95,7 +95,7 @@
       "sizeY": 30,
       "velocity": 0.3,
       "thresholdAngle": 45,
-      "rate": 0.7,
+      "rate": 0.7
     },
     "magnet": {
       "frequency": 1,
