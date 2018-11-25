@@ -79,7 +79,7 @@
       "angularVelocity": 0.5,
       "radius": 20,
       "texture": "textures/vacuum/real10.png"
-    },
+    }
   },
   "powerUpTypes": {
     "turbo": {
