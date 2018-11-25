@@ -93,7 +93,7 @@ window.onload = function() {
   
   socket.on('misilCreated', (newMisil) => {
     misils[newMisil.id] = newMisil;
-    misils[newMisil.id].raster = new paper.Raster(`textures/powerups/misil.png`);
+    misils[newMisil.id].raster = new paper.Raster(`textures/powerups/misilOn.png`);
     misils[newMisil.id].raster.position = new paper.Point(newMisil.x, newMisil.y);
     misils[newMisil.id].raster.rotate(newMisil.angle);
     misils[newMisil.id].raster.sendToBack();
