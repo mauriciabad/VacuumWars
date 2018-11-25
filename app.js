@@ -17,7 +17,8 @@ var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
 var intervalTime = game.config.intervalTime;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
-setInterval(() => {tryTrash()}, intervalTime/7);
+setInterval(() => {tryTrash()}, 200);
+setInterval(() => {tryPowerUp()}, 1000);
 const skins = ["real1","real2","real3","real4"];
 var leftSkins = [];
 fillLeftSkins();
@@ -60,8 +61,15 @@ function fillLeftSkins() {
   for (var skin of skins) leftSkins.push(skin);
 }
 
+function tryPowerUp(){
+  console.log("Trying powerup");
+  if(Math.random() < 0.5) {
+    addPowerUp("turbo");
+  }
+}
+
 function tryTrash(){
-  if(Math.random() < 0.001) {
+  if(Math.random() < 0.05) {
     repopulateTrash();
   }
 }
@@ -83,14 +91,16 @@ function addTrash(type) {
     io.emit('trashCreated', newTrash);
     console.log("Added trash", newTrash);
 }
-function addPowerUp(type) {
+function addPowerUp(type) { //Adds a power up to Power up vectors
   var newPowerUp = {
     "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
-    "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].radius)),
-    "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].radius)),
+    "x": Math.floor(Math.random()*(game.map.width - game.powerUpTypes[type].sizeX/2)),
+    "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].sizeY/2)),
     "type": type
   };
+  console.log(newPowerUp);
   game.powerUps[newPowerUp.id] = newPowerUp;
+  io.emit('powerUpCreated', newPowerUp);
 }
 
 function executePowerUp(player) {
@@ -194,6 +204,7 @@ function checkCollisionsPowerUps() {
       var powerUp = game.powerUps[powerUpId];
       if (playerTrashOrPowerUpCollision(player,powerUp)) {
         givePowerUp(player, powerUp);
+        io.emit('deletedPowerUp', game.powerUps[powerUpId]);
         delete game.powerUps[powerUpId];
       }
     }

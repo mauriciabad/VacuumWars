@@ -61,7 +61,7 @@ window.onload = function() {
     console.log("Created PowerUp", newPowerUp);
   });
 
-  socket.on('trashDeleted', (deletedPowerUp) => {
+  socket.on('powerUpDeleted', (deletedPowerUp) => {
     powerUps[deletedPowerUp.id].raster.remove();
     delete powerUps[deletedPowerUp.id];
     console.log("Deleted PowerUp", deletedPowerUp);
