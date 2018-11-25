@@ -35,6 +35,9 @@ io.on('connection', (socket) => {
   player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
 
   io.emit('playerConnect', player);
+  for (var i = 0; i < game.trashes.length; ++i) {
+    socket.emit('trashCreated', game.trashes[i])
+  }
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
                                         delete game.players[player.id] });
   socket.on('changeVacuum', (type) => { player.type = type; });
