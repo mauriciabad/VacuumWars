@@ -222,7 +222,6 @@ function checkCollisionsTrahses() {
     for(var trashId in game.trashes) {
       var trash = game.trashes[trashId];
       if (playerTrashOrPowerUpCollision(player,trash)) {
-        player.points += 1;
         io.emit("trashDeleted",trash);
         delete game.trashes[trashId];
         player.points += game.trashTypes[trash.type].points;
