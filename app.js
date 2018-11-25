@@ -205,7 +205,7 @@ function checkCollisionsTrahses() {
       }
     }
   }
-  
+
 function checkCollisionsPowerUps() {
   for(var playerId in game.players) {
     var player = game.players[playerId];
@@ -221,7 +221,6 @@ function checkCollisionsPowerUps() {
   }
 }
   
-
 function playerCollidesTop(player)   { return game.vacuumTypes[player.type].radius > player.y }
 function playerCollidesBottom(player){ return game.vacuumTypes[player.type].radius - 15 > game.map.height - player.y }
 function playerCollidesLeft(player)  { return game.vacuumTypes[player.type].radius > player.x }
