@@ -275,7 +275,7 @@ function checkIfMissilOut(misil) {
     for (var playerId in game.players) {
       var player = game.players[playerId];
       if (!(player.id == misil.owner) && euclideanDist(player.x,player.y,misil.x,misil.y) <= (game.vacuumTypes[player.type].radius + 8)){
-        player.points -= 200;
+        player.points -= 50;
         delete game.misils[misil.id];
         io.emit('misilDeleted',misil);
       }
