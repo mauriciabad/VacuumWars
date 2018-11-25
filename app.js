@@ -168,9 +168,7 @@ function checkCollisionsPlayers() {
         }
       }
     }
-    if (playerWallCollision(player1)) {
-      reverseMovePlayer(player1)
-    }
+    playerWallCollision(player1)
 
   }
 }
@@ -189,12 +187,21 @@ function checkCollisionsTrahses() {
 }
 
 function playerCollidesTop(player)   { return 20 > player.y }
-function playerCollidesBottom(player){ return 20 > game.map.height - player.y }
+function playerCollidesBottom(player){ return 5 > game.map.height - player.y }
 function playerCollidesLeft(player)  { return 20 > player.x }
-function playerCollidesRight(player) { return 20 > game.map.width - player.x }
+function playerCollidesRight(player) { return 5  > game.map.width - player.x }
+
+
 function playerWallCollision(player) {
-  return playerCollidesTop(player)  || playerCollidesBottom(player) ||
-         playerCollidesLeft(player) || playerCollidesRight(player) ;
+  if (playerCollidesTop(player)) {
+    player.angle = - player.angle
+  } else if (playerCollidesBottom(player)) {
+    player.angle = - player.angle
+  } else if (playerCollidesLeft(player)) {
+    player.angle = 180 - player.angle
+  } else if (playerCollidesRight(player)) {
+    player.angle = 180 - player.angle
+  }
 }
 
 function checkCollisionsPowerUps() {
