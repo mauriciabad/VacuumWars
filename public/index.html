@@ -8,7 +8,7 @@
   <style>
     body{
       margin: 0;
-      background-color: #333;
+      background: #222 url(textures/maps/grass.jpg) repeat center; 
       color: white;
       font-family: 'Gaegu', cursive;
     }
@@ -20,15 +20,18 @@
       align-items: center;
     }
     #canvas{
-      border: solid 10px #f1eee8;
-      background: #cac6ad url(textures/maps/wood.png) repeat center; 
-      border-radius: 10px;
+      border: solid 10px #833B2E;
+      background: #E9D4B6 url(textures/maps/wood.png) repeat center; 
+      border-radius: 5px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.5), inset 0 0 16px rgba(0,0,0,0.5), 
+                  0 0 8px rgba(0,0,0,0.5), 0 0 16px rgba(0,0,0,0.5)
     }
     #scoreboard{
       font-size: 1.5em;
       margin-right: 1em;
       max-width: 200px;
       text-align: right;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7), 0 0 16px rgba(0,0,0,0.7)
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.8/paper-full.min.js"></script>
