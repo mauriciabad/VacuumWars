@@ -7,16 +7,15 @@ var fs      = require("fs");
 
 // Show HTML
 app.use(express.static('public'));
-
-
 http.listen(3000, () => {
-  console.log('listening on localhot:3000');
+  console.log('listening on localhost:3000');
 });
 
-// The game
-var game   = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
-var gameId = setInterval(() => {updateGame()}, 1000/60);
-setInterval(() => {sendGame()}, 1000/60);
+// Game setup
+var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
+var intervalTime = 1000/60;
+var gameId   = setInterval(() => {updateGame()}, intervalTime);
+setInterval(() => {sendGame()}, intervalTime);
 
 // When a player connects
 io.on('connection', (socket) => {
@@ -110,32 +109,21 @@ function updateGame(){
   //respawn
 }
 
-/*
-Aqui escriu el Carles
-*/
-
 function movePlayer(player) {
-  /*
-    TODO: Afegir les velocitats a una variable
-  */
-  player.x += Math.cos(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
-  player.y += Math.sin(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
-
+  var distance = game.vacuumTypes[player.type].linearVelocity*player.linearVelocity*intervalTime;
+  player.x += Math.cos(player.angle*2*Math.PI/360)*distance;
+  player.y += Math.sin(player.angle*2*Math.PI/360)*distance;
 }
 
 function reverseMovePlayer(player) {
-    /*
-    TODO: Afegir les velocitats a una variable
-  */
-  player.x -= Math.cos(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
-  player.y -= Math.sin(player.angle*2*Math.PI/360)*0.5*player.linearVelocity*(1000/60)
-
+  var distance = game.vacuumTypes[player.type].linearVelocity*player.linearVelocity*intervalTime;
+  player.x -= Math.cos(player.angle*2*Math.PI/360)*distance;
+  player.y -= Math.sin(player.angle*2*Math.PI/360)*distance;
 }
 
 function rotatePlayer(player) {
-  player.angle += 0.1*player.angularVelocity*(1000/60);
+  player.angle += game.vacuumTypes[player.type].angularVelocity*player.angularVelocity*intervalTime;
   player.angle %= 360;
-
 }
 
 function addTrash(toAdd) {
