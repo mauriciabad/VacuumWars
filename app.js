@@ -307,7 +307,3 @@ function sendPuntuation() {
   puntuation.sort((a,b) => { return a.points - b.points;});
   io.emit('points', puntuation);
 }
-
-
-
-

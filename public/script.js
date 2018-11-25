@@ -101,7 +101,7 @@ window.onload = function() {
     for (var pair in puntuation) {
       content += `<li>${puntuation[pair].player}: ${puntuation[pair].points}p</li>`;
     }
-    scoreboard.textContent = content;
+    scoreboard.innerHTML = content;
   });
   
   function move(isMoving, e) {
