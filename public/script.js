@@ -93,8 +93,15 @@ window.onload = function() {
     return false;
   }
   
-  socket.on('points', function (points) {
-    console.log(points);
+  var scoreboard = document.getElementById('scoreboard');
+  
+  socket.on('points', (puntuation) => {
+    console.log(puntuation);
+    var content = '';
+    for (var pair in puntuation) {
+      content += `<li>${puntuation[pair].player}: ${puntuation[pair].points}p</li>`;
+    }
+    scoreboard.textContent = content;
   });
   
   function move(isMoving, e) {

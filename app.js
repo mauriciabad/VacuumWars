@@ -20,6 +20,8 @@ setInterval(() => {sendGame()}, intervalTime);
 setInterval(() => {tryTrash()}, 100);
 setInterval(() => {tryPowerUp()}, 1500);
 const skins = ["real1","real2","real3","real4"];
+var names = ["Roomba","Bissell ","Miele","Shark","Dirt Devil","Miele","Hoover","Dyson","Niceeshop ","Oreck","Biene"].sort(() => {return .5 - Math.random();});
+var nameI = 0;
 var leftSkins = [];
 fillLeftSkins();
 
@@ -38,6 +40,7 @@ io.on('connection', (socket) => {
   player.id  = socket.id;
   if(leftSkins.length == 0) fillLeftSkins();
   player.type = leftSkins.pop();
+  player.name = names[nameI]; nameI = (nameI+1) % names.length;
   player.x   = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
   player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
 
@@ -89,7 +92,7 @@ function addTrash(type) {
 
     game.trashes[newTrash.id] = newTrash;    
     io.emit('trashCreated', newTrash);
-    console.log("Added trash", newTrash);
+    // console.log("Added trash", newTrash);
 }
 function addPowerUp(type) { //Adds a power up to Power up vectors
   if(Object.keys(game.powerUps).length < 3){
@@ -99,7 +102,6 @@ function addPowerUp(type) { //Adds a power up to Power up vectors
       "y": Math.floor(Math.random()*(game.map.height - game.powerUpTypes[type].sizeY/2)),
       "type": type
     };
-    console.log(newPowerUp);
     game.powerUps[newPowerUp.id] = newPowerUp;
     io.emit('powerUpCreated', newPowerUp);
   }
@@ -183,7 +185,10 @@ function checkCollisionsTrahses() {
       if (playerTrashOrPowerUpCollision(player,trash)) {
         io.emit("trashDeleted",trash);
         delete game.trashes[trashId];
-        console.log("Deleted Trash", trash);      }
+        player.points += game.trashTypes[trash.type].points;
+        sendPuntuation();
+        // console.log("Deleted Trash", trash);
+      }
     }
   }
 }
@@ -192,7 +197,6 @@ function playerCollidesTop(player)   { return 20 > player.y }
 function playerCollidesBottom(player){ return 5 > game.map.height - player.y }
 function playerCollidesLeft(player)  { return 20 > player.x }
 function playerCollidesRight(player) { return 5  > game.map.width - player.x }
-
 
 function playerWallCollision(player) {
   if (playerCollidesTop(player)) {
@@ -253,7 +257,17 @@ function playerTrashOrPowerUpCollision(player,object) {
     );
 }
 
-
+function sendPuntuation() {
+  puntuation = [];
+  for (var playerId in game.players) {
+    puntuation.push({
+      "player": game.players[playerId].name,
+      "points": game.players[playerId].points
+    });
+  }
+  puntuation.sort((a,b) => { return a.points - b.points;});
+  io.emit('points', puntuation);
+}
 
 
 

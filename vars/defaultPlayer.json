@@ -12,5 +12,6 @@
   "type": "real1",
   "powerUp": null,
   "powerUpUsesLeft": 0,
-  "points": 0
+  "points": 0,
+  "state": "alive"
 }
