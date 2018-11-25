@@ -160,18 +160,15 @@ function checkCollisionsPlayers() {
   }
 }
 
-function deleteTrash(trash) {
-  delete game.trashes[trash];
-  io.emit("deleteTrash",trash);
-}
-
 function checkCollisionsTrahses() {
   for(var playerId in game.players) {
     var player = game.players[playerId];
-    for(var trash in game.trashes) {
+    for(var trashId in game.trashes) {
+      var trash = game.trashes[trashId];
       if (playerTrashOrPowerUpCollision(player,trash)) {
-        deleteTrash(trash);
-      }
+        io.emit("trashDeleted",trash);
+        delete game.trashes[trashId];
+        console.log("Deleted Trash", trash);      }
     }
   }
 }
@@ -211,12 +208,13 @@ function playerPlayerCollision(player1,player2) {
   /*
   TODO: posar be el radius pq esta harcodeado
   */
-  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) <= 2*(20))
+  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) <= 2*(20));
 }
 
-function playerTrashOrPowerUpCollision(player,object) {
-  var moveX = game.vacuumTypes[player.type].sizeX/2
-  var moveY = game.vacuumTypes[player.type].sizeY/2
+function playerTrashOrPowerUpCollision(player,object) {  
+  var type = (game.trashTypes[object.type] != undefined) ? game.trashTypes[object.type] : game.powerUpTypes[object.type];
+  var moveX = type.sizeX/2;
+  var moveY = type.sizeY/2;
   return( pointInCircle(player.x,player.y,20, object.x + moveX, object.y + moveY) ||
           pointInCircle(player.x,player.y,20, object.x + moveX, object.y - moveY) ||
           pointInCircle(player.x,player.y,20, object.x - moveX, object.y + moveY) ||

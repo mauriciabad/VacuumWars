@@ -49,9 +49,10 @@ window.onload = function() {
     console.log("Created Trash", newTrash);
   });
 
-  socket.on('deleteTrash', (deleteTrash) => {
+  socket.on('trashDeleted', (deleteTrash) => {
     trashes[deleteTrash.id].raster.remove();
     delete trashes[deleteTrash.id];
+    console.log("Deleted Trash", deleteTrash);
   });
 
 
@@ -112,29 +113,5 @@ window.onload = function() {
 
 
 
-
-
-
-
-
   paper.view.draw();
 }
-
-
-
-
-
-
-// -------- Mauri -------
-
-
-
-// ------- Alvaro --------
-
-
-
-// ------- Carles --------
-
-
-
-// -----------------------
