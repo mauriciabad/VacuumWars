@@ -18,16 +18,22 @@ Hi ha +3 mapes.
 ## PowerUps:
 Cada 5 boles de paper buanyes un power up o tels troves
 
-- Missils (Cau merda i perd punts)
+- Missils: Cau merda i perd punts
+- Cables: Trampa
+- Bateria: Mes potencia de aspiracio.
 - Missil que et bloqueja
 - Et canvia la direccio de rotació
 - Més Velocitat / Menys velocitat
 - T'amplies l'aspiradora. (+punts)
 - Pots reduïr un enemic. (-punts)
 - Pots fer que un company vagi amb lag
-- Trampa (Cables)
 - Apagar la llum
 - Alguns carreguen
+
+## Estats
+- Bloquejat:
+- Mort: 
+
 
 ## Mecaniques
 

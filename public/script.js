@@ -14,17 +14,18 @@ window.onload = function() {
     canvas.width  = game.map.width;
   });
 
-  socket.on('playerDisconnect', (disconnectedPlayer) => {
-    players[disconnectedPlayer.id].raster.remove();
-    delete players[disconnectedPlayer.id];
-    console.log("Disconnected Player", disconnectedPlayer);
-  });
   socket.on('playerConnect', (connectedPlayer) => {    
     players[connectedPlayer.id] = connectedPlayer;
     players[connectedPlayer.id].raster = new paper.Raster(`textures/vacuum/${connectedPlayer.type}.png`);
     players[connectedPlayer.id].raster.position = new paper.Point(connectedPlayer.x, connectedPlayer.y);
     players[connectedPlayer.id].raster.rotate(90);
     console.log("Connected Player", connectedPlayer);
+  });
+  
+  socket.on('playerDisconnect', (disconnectedPlayer) => {
+    players[disconnectedPlayer.id].raster.remove();
+    delete players[disconnectedPlayer.id];
+    console.log("Disconnected Player", disconnectedPlayer);
   });
   
   socket.on('playersUpdate', (newPlayers) => {
@@ -38,9 +39,6 @@ window.onload = function() {
     }
   });
   
-  socket.on('powerUps', (newPowerUps) => {
-  });
-  
   socket.on('trashCreated', (newTrash) => {
     trashes[newTrash.id] = newTrash;
     trashes[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
@@ -49,10 +47,24 @@ window.onload = function() {
     console.log("Created Trash", newTrash);
   });
 
-  socket.on('trashDeleted', (deleteTrash) => {
-    trashes[deleteTrash.id].raster.remove();
-    delete trashes[deleteTrash.id];
-    console.log("Deleted Trash", deleteTrash);
+  socket.on('trashDeleted', (deletedTrash) => {
+    trashes[deletedTrash.id].raster.remove();
+    delete trashes[deletedTrash.id];
+    console.log("Deleted Trash", deletedTrash);
+  });
+  
+  socket.on('powerUpCreated', (newPowerUp) => {
+    powerUps[newPowerUp.id] = newPowerUp;
+    powerUps[newPowerUp.id].raster = new paper.Raster(`textures/powerUp/${newPowerUp.type}.png`);
+    powerUps[newPowerUp.id].raster.position = new paper.Point(newPowerUp.x, newPowerUp.y);
+    powerUps[newPowerUp.id].raster.sendToBack();
+    console.log("Created PowerUp", newPowerUp);
+  });
+
+  socket.on('trashDeleted', (deletedPowerUp) => {
+    powerUps[deletedPowerUp.id].raster.remove();
+    delete powerUps[deletedPowerUp.id];
+    console.log("Deleted PowerUp", deletedPowerUp);
   });
 
 

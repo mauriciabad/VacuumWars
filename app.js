@@ -61,7 +61,7 @@ function fillLeftSkins() {
 }
 
 function tryTrash(){
-  if(Math.random() < 0.005) {
+  if(Math.random() < 0.001) {
     repopulateTrash();
   }
 }
