@@ -54,7 +54,17 @@ window.onload = function() {
     trashes[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
     trashes[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
     trashes[newTrash.id].raster.sendToBack();
+    trashes[newTrash.id].raster.rotate(Math.random()*360);
     console.log("Created Trash", newTrash);
+  });
+
+  socket.on('trashesUpdate', (newTrash) => {
+    for(var trash in newTrash) {
+      trashes[trash].x = newTrash[trash].x;
+      trashes[trash].y = newTrash[trash].y;
+      trashes[trash].raster.position = new paper.Point(trashes[trash].x, trashes[trash].y);
+      trashes[trash].raster.rotate(angle);
+    }
   });
 
   socket.on('trashDeleted', (deletedTrash) => {

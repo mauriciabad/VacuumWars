@@ -20,7 +20,7 @@ setInterval(() => {sendGame()}, intervalTime);
 setInterval(() => {repopulateTrash()}, 100);
 setInterval(() => {repopulatePowerUp()}, 1500);
 
-const skins = ["real1","real2","real3","real4"];
+const skins = ["real1","real2","real3","real4","real5","real6","real7","real8","real9","real10"].sort(() => {return .5 - Math.random();});
 var leftSkins = [];
 fillLeftSkins();
 var names = ["Roomba","Bissell ","Miele","Shark","Dirt Devil","Miele","Hoover","Dyson","Niceeshop ","Oreck","Biene"].sort(() => {return .5 - Math.random();});
