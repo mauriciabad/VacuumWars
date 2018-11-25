@@ -96,8 +96,10 @@
       "velocity": 1
     },
     "magnet": {
-      "frequency": 1,
-      "atract": 2,
+      "frequency": 100,
+      "atract": 10,
+      "sizeX": 30,
+      "sizeY": 30,
       "uses": 120
     }
   },
