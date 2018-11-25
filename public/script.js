@@ -28,6 +28,8 @@ window.onload = function() {
   
   socket.on('playersUpdate', (newPlayers) => {
     for (const player in players) {
+      console.log(players[player])
+      console.log(newPlayers[player])
       var angle = newPlayers[player].angle - players[player].angle;
       players[player].x =  newPlayers[player].x;
       players[player].y =  newPlayers[player].y;
