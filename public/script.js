@@ -51,6 +51,7 @@ window.onload = function() {
       players[newTrash.id] = newTrash;
       players[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
       players[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
+      players[newTrash.id].raster.sendToBack();
   });
 
 
