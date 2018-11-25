@@ -94,7 +94,7 @@
       "sizeX": 30,
       "sizeY": 30,
       "velocity": 0.3,
-      "thresholdAngle": 45,
+      "thresholdAngle": 75,
       "rate": 0.7
     },
     "magnet": {
@@ -106,8 +106,8 @@
     }
   },
   "config": {
-    "maxPowerUp": 5,
-    "maxTrash": 25,
+    "maxPowerUp": 8,
+    "maxTrash": 40,
     "intervalTime": 25
   },
   "map": {

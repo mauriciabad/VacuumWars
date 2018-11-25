@@ -18,7 +18,7 @@ var intervalTime = game.config.intervalTime;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
 setInterval(() => {repopulateTrash()}, 100);
-setInterval(() => {repopulatePowerUp()}, 1500);
+setInterval(() => {repopulatePowerUp()}, 500);
 
 const skins = ["real1","real2","real3","real4","real5","real6","real7","real8","real9","real10"].sort(() => {return .5 - Math.random();});
 var skinI = 0;
@@ -51,8 +51,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
                                         delete game.players[player.id]
                                         sendPuntuation(); });
-  socket.on('changeVacuum', (type) => { player.type = type; });
-  socket.on('rename', (name)       => { player.name = name; });
   socket.on('move',   (isMoving)   => { player.isMoving = isMoving; });
   socket.on('active', (isActing)   => { player.isActing = isActing; });
   socket.on('ignoreMe', (isIgnored)=> { io.emit('playerDisconnect', player);
@@ -82,7 +80,7 @@ function getFrec(types, freq) {
 }
 
 function repopulatePowerUp(){
-  if(Math.random() < 0.3 && Object.keys(game.powerUps).length < game.config.maxPowerUp) {
+  if(Math.random() < 0.2 && Object.keys(game.powerUps).length < game.config.maxPowerUp) {
     var n = Math.floor(Math.random()*powerUpFrecSum);
     if(n == powerUpFrecSum) powerUpFrecSum - 0.001;
     addPowerUp(getFrec(game.powerUpTypes, n));
@@ -90,7 +88,7 @@ function repopulatePowerUp(){
 }
 
 function repopulateTrash() {    
-  if(Math.random() < 0.05 && Object.keys(game.trashes).length < game.config.maxTrash) {
+  if(Math.random() < 0.1 && Object.keys(game.trashes).length < game.config.maxTrash) {
     var n = Math.floor(Math.random()*trashFrecSum);
     if(n == powerUpFrecSum) powerUpFrecSum - 0.001;
     addTrash(getFrec(game.trashTypes, n));

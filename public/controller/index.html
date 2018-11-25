@@ -85,12 +85,6 @@
       e.preventDefault();
       socket.emit('active', isActing);
     }
-    function rename(name) {
-      socket.emit('rename', name);      
-    }
-    function changeVacuum(vacuum) {
-      socket.emit('changeVacuum', vacuum);      
-    }
   </script>
 </body>
 </html>

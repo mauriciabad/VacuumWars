@@ -12,6 +12,7 @@ window.onload = function() {
   var misils   = {};
   var audios   = {
     "misil-launch": new Audio('sounds/misil.ogg'),
+    "magnet": new Audio('sounds/magnet.ogg')
   }
 
   socket.on('setup', (game) => {
