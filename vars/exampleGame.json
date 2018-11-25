@@ -35,7 +35,8 @@
     }
   },
   "config": {
-    "minTrash": 10
+    "minTrash": 10,
+    "maxTrash": 25
   },
   "map": {
     "id": 1,
