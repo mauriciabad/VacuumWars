@@ -27,10 +27,10 @@ window.onload = function() {
   
   socket.on('playersUpdate', (newPlayers) => {
     for (const player in players) {
-      console.log(players[player])
-      console.log(newPlayers[player])
       var angle = newPlayers[player].angle - players[player].angle;
-      players[player] =  Object.assign(players[player], newPlayers[player]);
+      players[player].x = newPlayers[player].x
+      players[player].y = newPlayers[player].y
+      players[player].angle = newPlayers[player].angle
       players[player].raster.position = new paper.Point(players[player].x, players[player].y);
       players[player].raster.rotate(angle);
     }

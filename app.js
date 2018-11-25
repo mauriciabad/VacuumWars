@@ -211,7 +211,7 @@ function playerPlayerCollision(player1,player2) {
   /*
   TODO: posar be el radius pq esta harcodeado
   */
-  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) > 2*(20))
+  return (euclideanDist(player1.x,player1.y,player2.x,player2.y) <= 2*(20))
 }
 
 function playerTrashOrPowerUpCollision(player,object) {
