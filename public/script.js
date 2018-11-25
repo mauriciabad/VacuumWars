@@ -5,8 +5,8 @@ window.onload = function() {
 
 
   var socket   = io();
-  var trashes  = []; 
-  var powerUps = [];
+  var trashes  = {}; 
+  var powerUps = {};
   var players  = {};
   
   socket.on('setup', (game) => {
@@ -48,10 +48,10 @@ window.onload = function() {
   
   socket.on('trashCreated', (newTrash) => {
       console.log("New Trash!");
-      players[newTrash.id] = newTrash;
-      players[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
-      players[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
-      players[newTrash.id].raster.sendToBack();
+      trashes[newTrash.id] = newTrash;
+      trashes[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
+      trashes[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
+      trashes[newTrash.id].raster.sendToBack();
   });
 
 

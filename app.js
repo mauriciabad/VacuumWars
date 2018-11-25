@@ -20,7 +20,6 @@ setInterval(() => {tryTrash()}, intervalTime/6);
 
 function tryTrash(){
   if(Math.random() < 0.01) {
-    console.log("repopulate trash");
     repopulateTrash();
   }
 }
@@ -60,7 +59,7 @@ Aqui escriu l'Alvaro
 */
 
 function repopulateTrash() {
-  if(game.trashes.length > game.config.maxTrash) addTrash();
+  if(game.trashes.length < game.config.maxTrash) addTrash();
 }
 
 function addPowerUp() {
@@ -127,7 +126,7 @@ function rotatePlayer(player) {
   player.angle %= 360;
 }
 
-function addTrash() {
+function addTrash() {  
   /*
   TODO: La trash es random pero es pot superposar
   */
@@ -139,6 +138,7 @@ function addTrash() {
 
     game.trashes.push(newTrash);    
     io.emit('trashCreated', newTrash);
+    console.log("Added trash", newTrash);
 }
 
 function checkCollisionsPlayers() {
