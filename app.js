@@ -16,10 +16,10 @@ var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
 var intervalTime = 1000/60;
 var gameId   = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
-setInterval(() => {tryTrash()}, intervalTime/5);
+setInterval(() => {tryTrash()}, intervalTime/6);
 
 function tryTrash(){
-  if(Math.random() < 0.02) {
+  if(Math.random() < 0.01) {
     console.log("repopulate trash");
     repopulateTrash();
   }
@@ -60,7 +60,7 @@ Aqui escriu l'Alvaro
 */
 
 function repopulateTrash() {
-    addTrash();
+  if(game.trashes.length > game.config.maxTrashes) addTrash();
 }
 
 function addPowerUp() {
