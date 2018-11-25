@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
 function sendGame(){
   io.emit('playersUpdate', game.players);
   if (Object.keys(game.misils).length > 0){
-    io.emit('misilUpdate',game.misils);
+    io.emit('misilsUpdate',game.misils);
   }
 }
 
@@ -185,7 +185,7 @@ function shootMisil(player) {
     "angle": player.angle,
   };
   game.misils[newMisil.id] = newMisil;
-  io.emit("misilCreate",newMisil)
+  io.emit("misilCreated",newMisil)
 }
 
 function moveMisil(misil) {
@@ -197,7 +197,7 @@ function moveMisil(misil) {
 function checkIfMissilOut(misil) {
   if (misil.x < 0 || misil.x > game.map.width || misil.y < 0 || misil.y > game.map.height){
     delete game.misils[misil.id]
-    io.emit('misilDelete',misil);
+    io.emit('misilDeleted',misil);
   }
 }
 
