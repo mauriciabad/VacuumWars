@@ -61,6 +61,9 @@ io.on('connection', (socket) => {
 
 function sendGame(){
   io.emit('playersUpdate', game.players);
+  if (Object.keys(game.misils).length > 0){
+    io.emit('misilsUpdate',game.misils);
+  }
 }
 
 function fillLeftSkins() {
@@ -151,7 +154,7 @@ function executePowerUp(player) {
         break;
       
       case "misil":
-        shootMisil();
+        shootMisil(player);
         updatePowerUpUses(player);
         break;
     }
@@ -180,13 +183,42 @@ function updateGame(){
       else rotatePlayer(player);
     }
   }
-
+  for(var misilId in game.misils) {
+    var misil = game.misils[misilId];
+    moveMisil(misil);
+    checkIfMissilOut(misil);
+  }
   checkCollisionsPlayers();
   checkCollisionsTrahses();
   checkCollisionsPowerUps();
   checkActions();
   //respawn
 }
+
+function shootMisil(player) {
+  var newMisil = {
+    "id": (new Date()).getTime() + '' + Object.keys(game.powerUps).length,
+    "x": 5 + player.x + game.vacuumTypes[player.type].radius*Math.cos(player.angle*2*Math.PI/360),
+    "y": 5 + player.y + game.vacuumTypes[player.type].radius*Math.sin(player.angle*2*Math.PI/360),
+    "angle": player.angle,
+  };
+  game.misils[newMisil.id] = newMisil;
+  io.emit("misilCreated",newMisil)
+}
+
+function moveMisil(misil) {
+  var distance = game.powerUpTypes["misil"].velocity*intervalTime;
+  misil.x += Math.cos(misil.angle*2*Math.PI/360)*distance;
+  misil.y += Math.sin(misil.angle*2*Math.PI/360)*distance;
+}
+
+function checkIfMissilOut(misil) {
+  if (misil.x < 0 || misil.x > game.map.width || misil.y < 0 || misil.y > game.map.height){
+    delete game.misils[misil.id]
+    io.emit('misilDeleted',misil);
+  }
+}
+
 
 function movePlayer(player) {
   var distance = game.vacuumTypes[player.type].linearVelocity*player.linearVelocity*intervalTime;

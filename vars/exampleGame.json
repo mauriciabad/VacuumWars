@@ -2,6 +2,7 @@
   "players": {},
   "trashes": {},
   "powerUps": {},
+  "misils": {},
   "trashTypes": {
     "paper":{
       "points": 10,
@@ -55,7 +56,8 @@
       "frequency": 1,
       "uses": 1,
       "sizeX": 30,
-      "sizeY": 30
+      "sizeY": 30,
+      "velocity": 1
     }
   },
   "config": {
