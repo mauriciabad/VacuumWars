@@ -211,6 +211,7 @@ function atractAllPapers(player) {
     trash.x += Math.cos(angle*2*Math.PI/360)*distance;
     trash.y += Math.sin(angle*2*Math.PI/360)*distance;
   }
+  io.emit('trashesUpdate',game.trashes);
 }
 
 function shootMisil(player) {
