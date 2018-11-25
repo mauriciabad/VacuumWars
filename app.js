@@ -25,7 +25,6 @@ var nameI = 0;
 var leftSkins = [];
 fillLeftSkins();
 
-
 // When a player connects
 io.on('connection', (socket) => {
   // Send current state to client
@@ -41,11 +40,12 @@ io.on('connection', (socket) => {
   if(leftSkins.length == 0) fillLeftSkins();
   player.type = leftSkins.pop();
   player.name = names[nameI]; nameI = (nameI+1) % names.length;
-  player.x   = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
-  player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
+  player.x    = Math.floor(Math.random()*(game.map.width - game.vacuumTypes[player.type].radius));
+  player.y    = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
   player.points = 0
   // Send to others that i exist
   io.emit('playerConnect', player);
+  sendPuntuation();
   // Recive info from the controller
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
                                         leftSkins.push(player.type);
@@ -270,7 +270,7 @@ function checkCollisionsPowerUps() {
       var powerUp = game.powerUps[powerUpId];
       if (playerTrashOrPowerUpCollision(player,powerUp)) {
         givePowerUp(player, powerUp);
-        io.emit('deletedPowerUp', powerUp);
+        io.emit('powerUpDeleted', powerUp);
         delete game.powerUps[powerUpId];
         console.log("Deleted PowerUp", powerUp);
       }
