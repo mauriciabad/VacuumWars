@@ -69,11 +69,6 @@ function addPowerUp() {
   game.powerUps.push(json);
 }
 
-function repopulatePowerUp() {
-  var prob = Math.random();
-  if(prob > 0.95) addPowerUp();
-}
-
 function executePowerUp(player, duration) {
   var powerUp = player.powerUp;
   if(duration > 0){ //Si el powerup encara dura.
@@ -108,7 +103,7 @@ function updateGame(){
   checkCollisionsTrahses();
   checkCollisionsPowerUps();
   checkActions();
-  repopulatePowerUp();
+  if(Math.random() > 0.95) addPowerUp();
   //respawn
 }
 
