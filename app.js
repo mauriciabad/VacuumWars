@@ -255,13 +255,17 @@ function playerCollidesRight(player) { return game.vacuumTypes[player.type].radi
 
 function playerWallCollision(player) {
   if (playerCollidesTop(player)) {
-    player.angle = - player.angle
+    player.angle = - player.angle;
+    player.y += 10;
   } else if (playerCollidesBottom(player)) {
-    player.angle = - player.angle
+    player.angle = - player.angle;
+    player.y -= 10;
   } else if (playerCollidesLeft(player)) {
-    player.angle = 180 - player.angle
+    player.angle = 180 - player.angle;
+    player.x += 10;
   } else if (playerCollidesRight(player)) {
-    player.angle = 180 - player.angle
+    player.angle = 180 - player.angle;
+    player.x -= 10;
   }
 }
 
