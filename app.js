@@ -60,7 +60,7 @@ Aqui escriu l'Alvaro
 */
 
 function repopulateTrash() {
-  if(game.trashes.length > game.config.maxTrashes) addTrash();
+  if(game.trashes.length > game.config.maxTrash) addTrash();
 }
 
 function addPowerUp() {
