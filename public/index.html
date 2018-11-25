@@ -31,8 +31,12 @@
       font-size: 1.5em;
       margin-right: 1em;
       max-width: 200px;
-      text-align: right;
+      text-align: left;
       text-shadow: 0 0 8px rgba(0,0,0,0.7), 0 0 16px rgba(0,0,0,0.7)
+    }
+    #scoreboard img{
+      height: 2em;
+      vertical-align: -0.66em;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.8/paper-full.min.js"></script>
@@ -42,6 +46,7 @@
 <body>
   <div>
     <ol id="scoreboard">
+      <li><img src="textures/vacuum/real7.png">: 200p</li>
     </ol>
     <canvas id="canvas" height="600" width="1000"></canvas>
   </div>

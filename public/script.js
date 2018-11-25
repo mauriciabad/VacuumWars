@@ -148,7 +148,7 @@ window.onload = function() {
     console.log(puntuation);
     var content = '';
     for (var pair in puntuation) {
-      content += `<li>${puntuation[pair].player}: ${puntuation[pair].points}p</li>`;
+      content += `<li><img src="textures/vacuum/${puntuation[pair].player}.png">: ${puntuation[pair].points}p</li>`;
     }
     scoreboard.innerHTML = content;
   });
