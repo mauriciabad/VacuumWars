@@ -406,7 +406,7 @@ function sendPuntuation() {
   puntuation = [];
   for (var playerId in game.players) {
     puntuation.push({
-      "player": game.players[playerId].name,
+      "player": game.players[playerId].type,
       "points": game.players[playerId].points
     });
   }
