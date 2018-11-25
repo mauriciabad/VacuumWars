@@ -231,6 +231,7 @@ function checkCollisionsTrahses() {
       }
     }
   }
+}
 
 function checkCollisionsPowerUps() {
   for(var playerId in game.players) {
@@ -307,7 +308,3 @@ function sendPuntuation() {
   puntuation.sort((a,b) => { return a.points - b.points;});
   io.emit('points', puntuation);
 }
-
-
-
-
