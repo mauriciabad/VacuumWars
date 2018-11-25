@@ -13,25 +13,25 @@
     "real1":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 30,
+      "radius": 20,
       "texture": "textures/vacuum/real1.png"
     },
     "real2":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 30,
+      "radius": 20,
       "texture": "textures/vacuum/real2.png"
     },
     "real3":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 30,
+      "radius": 20,
       "texture": "textures/vacuum/real3.png"
     },
     "real4":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 30,
+      "radius": 20,
       "texture": "textures/vacuum/real4.png"
     }
   },
