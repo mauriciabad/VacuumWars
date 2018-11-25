@@ -22,39 +22,45 @@
     "real1":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 30,
+      "radius": 20,
       "texture": "textures/vacuum/real1.png"
     },
     "real2":{
-      "linearVelocity": 0.75,
-      "angularVelocity": 0.25,
-      "radius": 30,
+      "linearVelocity": 0.5,
+      "angularVelocity": 0.5,
+      "radius": 20,
       "texture": "textures/vacuum/real2.png"
     },
     "real3":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 30,
+      "radius": 20,
       "texture": "textures/vacuum/real3.png"
     },
     "real4":{
       "linearVelocity": 0.5,
       "angularVelocity": 0.5,
-      "radius": 30,
+      "radius": 20,
       "texture": "textures/vacuum/real4.png"
     }
   },
   "powerUpTypes": {
     "turbo": {
       "frequency": 1,
+      "uses": 90,
       "sizeX": 30,
-      "sizeY": 30,
-      "uses": 90
+      "sizeY": 30
+    },
+    "misil": {
+      "frequency": 1,
+      "uses": 1,
+      "sizeX": 30,
+      "sizeY": 30
     }
   },
   "config": {
+    "minTrash": 10,
     "maxTrash": 25,
-    "maxPowerUps": 4,
     "intervalTime": 16.666666666666667
   },
   "map": {
@@ -63,5 +69,10 @@
     "width": 600,
     "height": 600,
     "texture": "textures/vacuum/dinnerRoom.png"
+  },
+  "states": {
+    "colliding":{
+      "penalitzation": 15
+    }
   }
 }
