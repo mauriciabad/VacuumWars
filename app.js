@@ -35,8 +35,8 @@ io.on('connection', (socket) => {
   player.y   = Math.floor(Math.random()*(game.map.height - game.vacuumTypes[player.type].radius));
 
   io.emit('playerConnect', player);
-  for (const trashId in game.trashes) {
-    socket.emit('trashCreated', game.trashes[trashId])
+  for(var trashId in game.trashes) {    
+    socket.emit('trashCreated', game.trashes[trashId]);
   }
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
                                         delete game.players[player.id] });
@@ -103,14 +103,14 @@ function executePowerUp(player) {
 }
 
 function checkActions() {
-  for (const playerId in game.players) {
+  for(var playerId in game.players) {
     var player = game.players[playerId];
     if (player.isActing) executePowerUp(player);
   }
 }
 
 function updateGame(){
-  for (const playerId in game.players) {
+  for(var playerId in game.players) {
     var player = game.players[playerId];
     if (player.isMoving) movePlayer(player);
     else rotatePlayer(player);
@@ -142,9 +142,9 @@ function rotatePlayer(player) {
 }
 
 function checkCollisionsPlayers() {
-  for(const playerId1 in game.players) {
+  for(var playerId1 in game.players) {
     var player1 = game.players[playerId1]
-    for(const playerId2 in game.players) {
+    for(var playerId2 in game.players) {
       if (playerId1 != playerId2) {
         var player2 = game.players[playerId2]
         if (playerPlayerCollision(player1,player2)) {
@@ -166,9 +166,9 @@ function deleteTrash(trash) {
 }
 
 function checkCollisionsTrahses() {
-  for(const playerId in game.players) {
+  for(var playerId in game.players) {
     var player = game.players[playerId];
-    for(const trash in game.trashes) {
+    for(var trash in game.trashes) {
       if (playerTrashOrPowerUpCollision(player,trash)) {
         deleteTrash(trash);
       }
@@ -186,9 +186,9 @@ function playerWallCollision(player) {
 }
 
 function checkCollisionsPowerUps() {
-  for(const playerId in game.players) {
+  for(var playerId in game.players) {
     var player = game.players[playerId];
-    for(const powerUpId in game.powerUps) {
+    for(var powerUpId in game.powerUps) {
       var powerUp = game.powerUps[powerUpId];
       if (playerTrashOrPowerUpCollision(player,powerUp)) {
         givePowerUp(player, powerUp);

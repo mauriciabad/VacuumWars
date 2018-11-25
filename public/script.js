@@ -28,7 +28,7 @@ window.onload = function() {
   });
   
   socket.on('playersUpdate', (newPlayers) => {
-    for (const player in newPlayers) {
+    for(var player in newPlayers) {
       var angle = newPlayers[player].angle - players[player].angle;
       players[player].x = newPlayers[player].x
       players[player].y = newPlayers[player].y
