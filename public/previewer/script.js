@@ -11,9 +11,11 @@ window.onload = function() {
   var players  = {};
   var misils   = {};
   var audios   = {
-    "misil-launch": new Audio('sounds/misil.ogg'),
-    "magnet": new Audio('sounds/magnet.ogg')
+    "misil-launch": new Audio('/sounds/misil.ogg'),
+    "magnet": new Audio('/sounds/magnet.ogg')
   }
+
+  setInterval(() => { animatePowerUps(); }, 1000/60);
 
   socket.on('setup', (game) => {
     canvas.height = game.map.height;
@@ -22,7 +24,7 @@ window.onload = function() {
 
   socket.on('playerConnect', (connectedPlayer) => {    
     players[connectedPlayer.id] = connectedPlayer;
-    players[connectedPlayer.id].raster = new paper.Raster(`textures/vacuum/${connectedPlayer.type}.png`);
+    players[connectedPlayer.id].raster = new paper.Raster(`/textures/vacuum/${connectedPlayer.type}.png`);
     players[connectedPlayer.id].raster.position = new paper.Point(connectedPlayer.x, connectedPlayer.y);
     players[connectedPlayer.id].raster.rotate(90);
     console.log("Connected Player", connectedPlayer);
@@ -42,8 +44,6 @@ window.onload = function() {
       players[player].angle = newPlayers[player].angle;
       players[player].raster.position = new paper.Point(players[player].x, players[player].y);
       players[player].raster.rotate(angle);
-
-      animatePowerUps();
     }
   });
 
@@ -55,7 +55,7 @@ window.onload = function() {
   
   socket.on('trashCreated', (newTrash) => {
     trashes[newTrash.id] = newTrash;
-    trashes[newTrash.id].raster = new paper.Raster(`textures/trash/${newTrash.type}.png`);
+    trashes[newTrash.id].raster = new paper.Raster(`/textures/trash/${newTrash.type}.png`);
     trashes[newTrash.id].raster.position = new paper.Point(newTrash.x, newTrash.y);
     trashes[newTrash.id].raster.sendToBack();
     trashes[newTrash.id].raster.rotate(Math.random()*360);
@@ -79,7 +79,7 @@ window.onload = function() {
   socket.on('powerUpCreated', (newPowerUp) => {
     powerUps[newPowerUp.id] = newPowerUp;
     powerUps[newPowerUp.id].rotationSpeed = 2 + 2*Math.random();
-    powerUps[newPowerUp.id].raster = new paper.Raster(`textures/powerups/${newPowerUp.type}.png`);
+    powerUps[newPowerUp.id].raster = new paper.Raster(`/textures/powerups/${newPowerUp.type}.png`);
     powerUps[newPowerUp.id].raster.position = new paper.Point(newPowerUp.x, newPowerUp.y);
     powerUps[newPowerUp.id].raster.sendToBack();
     console.log("Created PowerUp", newPowerUp);
@@ -93,7 +93,7 @@ window.onload = function() {
 
   socket.on('misilCreated', (newMisil) => {
     misils[newMisil.id] = newMisil;
-    misils[newMisil.id].raster = new paper.Raster(`textures/powerups/misilOn.png`);
+    misils[newMisil.id].raster = new paper.Raster(`/textures/powerups/misilOn.png`);
     misils[newMisil.id].raster.position = new paper.Point(newMisil.x, newMisil.y);
     misils[newMisil.id].raster.rotate(newMisil.angle);
     misils[newMisil.id].raster.sendToBack();
@@ -126,7 +126,7 @@ window.onload = function() {
     console.log(puntuation);
     var content = '';
     for (var pair in puntuation) {
-      content += `<li><img src="textures/vacuum/${puntuation[pair].player}.png">: ${puntuation[pair].points}p</li>`;
+      content += `<li><img src="/textures/vacuum/${puntuation[pair].player}.png">: ${puntuation[pair].points}p</li>`;
     }
     scoreboard.innerHTML = content;
   });

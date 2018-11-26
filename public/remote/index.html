@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Controller | Vacuum Wars</title>
+  <title>Remote controller for Vacuum Wars</title>
   <style>
     *{box-sizing: inherit; line-height: inherit; user-select: inherit;}
     body{
@@ -27,30 +27,51 @@
     .button-wraper{
       flex-grow: 1;
       display: flex;
+      padding: 0em;
+      overflow: hidden;
     }
     .button-wraper > div{
       flex-grow: 1;
     }
     .button{
       margin: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 48px;
       background-color: blueviolet;
       border-radius: 16px;
       /* border: solid 8px #999; */
-      box-shadow: 0 16px 0 rgb(74, 22, 104);
+      box-shadow: 0 32px 0 rgb(74, 22, 104);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 8em;
-      transition: opacity 200ms ease-out, transform 200ms ease-out;
+      transition: all 100ms ease-out;
       outline: none;
     }
-    .button:focus{
-      opacity: 0.8;
-    }
     .button:active{
-      transform: scale(0.8);
+      transform: translateY(32px);
+      box-shadow: 0 0 0 rgb(74, 22, 104);
+    }
+    .btn-move{
+      background-color: #5776BC;
+      box-shadow: 0 32px 0 #485B9D;
+    }
+    .btn-move:active{
+      box-shadow: 0 0 0 #485B9D;
+    }
+    .btn-powerUp{
+      background-color: #D5C167;
+      box-shadow: 0 32px 0 #C3AD4B;
+    }
+    .btn-powerUp:active{
+      box-shadow: 0 0 0 #C3AD4B;
+    }
+    .btn-disabled{
+      background-color: #888;
+      box-shadow: 0 32px 0 #666;
+    }
+    .btn-disabled:active{
+      box-shadow: 0 0 0 #666;
     }
   </style>
 </head>
@@ -59,10 +80,10 @@
     <span contenteditable="true" onblur="rename(this.textContent)">Chose your name</span>
   </div> -->
   <div class="button-wraper">
-    <div id="move-button" ontouchstart="move(true, event);" onmousedown="move(true, event);" ontouchend="move(false, event);" ontouchcancel="move(false, event);" onmouseup="move(false, event);" class="button" tabindex="0">
+    <div id="move-button" class="button btn-move" ontouchstart="move(true, event);" onmousedown="move(true, event);" ontouchend="move(false, event);" ontouchcancel="move(false, event);" onmouseup="move(false, event);" tabindex="0">
       <div>➟</div>
     </div>
-    <div id="action-button" ontouchstart="action(true, event);" onmousedown="action(true, event);" ontouchend="action(false, event);" ontouchcancel="action(false, event);" onmouseup="action(false, event);" class="button" tabindex="1">
+    <div id="action-button" class="button btn-powerUp" ontouchstart="action(true, event);" onmousedown="action(true, event);" ontouchend="action(false, event);" ontouchcancel="action(false, event);" onmouseup="action(false, event);" tabindex="1">
       <div>☼</div>
     </div>
   </div>

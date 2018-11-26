@@ -8,9 +8,7 @@ var fs      = require("fs");
 // Show HTML
 app.use(express.static('public'));
 const PORT = process.env.PORT || 3000;
-http.listen(PORT, () => {
-    console.log(`Our app is running on port ${ PORT }`);
-});
+http.listen(PORT, () => { console.log(`Running on port ${PORT}`); });
 
 // Game setup
 var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
@@ -47,7 +45,7 @@ io.on('connection', (socket) => {
   // Send to others that i exist
   io.emit('playerConnect', player);
   sendPuntuation();
-  // Recive info from the controller
+  // Recive info from the remote controller
   socket.on('disconnect', ()       => { io.emit('playerDisconnect', player);
                                         delete game.players[player.id]
                                         sendPuntuation(); });
