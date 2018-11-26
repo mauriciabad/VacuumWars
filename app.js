@@ -129,8 +129,7 @@ function resetStats(player){ //Resets stats of mutipliers
   player.angularVelocity = 1;
   player.size = 1;
   player.magnetic = false;
-  if(player.wired == 0) player.linearVelocity = 1;
-  else player.wired -= 1;
+  player.linearVelocity = 1;
 }
 
 function updatePowerUpUses(player){ //If the power up is empty, it erases it from user.
@@ -343,6 +342,12 @@ function checkCollisionsTrahses() {
         io.emit("trashDeleted",trash);
         delete game.trashes[trashId];
         player.points += game.trashTypes[trash.type].points;
+        switch (trash.type){
+          case "wires":
+            player.state = "blocked";
+            player.penalitzation = 50;
+            break;
+        }
         sendPuntuation();
         // console.log("Deleted Trash", trash);
       }
