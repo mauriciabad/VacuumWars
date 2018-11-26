@@ -27,6 +27,14 @@
       "frequency": 3,
       "sizeX": 30,
       "sizeY": 30
+    },
+    "wires":{
+      "frequency": 1,
+      "sizeX": 90,
+      "sizeY": 90,
+      "speed": 5,
+      "blockCycles": 50,
+      "max": 3
     }
   },
   "vacuumTypes": {

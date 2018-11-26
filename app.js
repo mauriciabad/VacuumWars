@@ -88,6 +88,7 @@ function repopulatePowerUp(){
 }
 
 function repopulateTrash() {    
+  console.log(game);  
   if(Math.random() < 0.1 && Object.keys(game.trashes).length < game.config.maxTrash) {
     var n = Math.floor(Math.random()*trashFrecSum);
     if(n == powerUpFrecSum) powerUpFrecSum - 0.001;
@@ -126,9 +127,10 @@ function addPowerUp(type) { //Adds a power up to Power up vectors
 
 function resetStats(player){ //Resets stats of mutipliers
   player.angularVelocity = 1;
-  player.linearVelocity = 1;
   player.size = 1;
   player.magnetic = false;
+  if(player.wired == 0) player.linearVelocity = 1;
+  else player.wired -= 1;
 }
 
 function updatePowerUpUses(player){ //If the power up is empty, it erases it from user.
@@ -179,7 +181,11 @@ function updateGame(){
       movePlayer(player);
       player.penalitzation -= 1;
       if (player.penalitzation < 0) player.state = "alive";
-    } 
+    }
+    else if( player.state == "blocked"){
+      player.penalitzation -=1;
+      if(player.penalitzation < 0) player.state = "alive";
+    }
     else if (player.state == "alive") {
       if (player.isMoving) movePlayer(player);
       else rotatePlayer(player);
@@ -191,7 +197,7 @@ function updateGame(){
     checkIfMissilOut(misil);
   }
   checkCollisionsPlayers();
-  checkCollisionsTrahses();
+  checkCollisionsTrahses();//Check for trashes and powerups
   checkCollisionsPowerUps();
   checkActions();
   //respawn
@@ -343,21 +349,6 @@ function checkCollisionsTrahses() {
     }
   }
 }
-
-function checkCollisionsPowerUps() {
-  for(var playerId in game.players) {
-    var player = game.players[playerId];
-    for(var powerUpId in game.powerUps) {
-      var powerUp = game.powerUps[powerUpId];
-      if (playerTrashOrPowerUpCollision(player,powerUp)) {
-        givePowerUp(player, powerUp);
-        io.emit('powerUpDeleted', powerUp);
-        delete game.powerUps[powerUpId];
-        console.log("Deleted PowerUp", powerUp);
-      }
-    }
-  }
-}
   
 function playerCollidesTop(player)   { return game.vacuumTypes[player.type].radius > player.y }
 function playerCollidesBottom(player){ return game.vacuumTypes[player.type].radius - 15 > game.map.height - player.y }
@@ -377,6 +368,21 @@ function playerWallCollision(player) {
   } else if (playerCollidesRight(player)) {
     player.angle = 180 - player.angle;
     player.x -= 10;
+  }
+}
+
+function checkCollisionsPowerUps() {
+  for(var playerId in game.players) {
+    var player = game.players[playerId];
+    for(var powerUpId in game.powerUps) {
+      var powerUp = game.powerUps[powerUpId];
+      if (playerTrashOrPowerUpCollision(player,powerUp)) {
+        givePowerUp(player, powerUp);
+        io.emit('powerUpDeleted', powerUp);
+        delete game.powerUps[powerUpId];
+        console.log("Deleted PowerUp", powerUp);
+      }
+    }
   }
 }
 

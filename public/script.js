@@ -90,7 +90,7 @@ window.onload = function() {
     delete powerUps[deletedPowerUp.id];
     console.log("Deleted PowerUp", deletedPowerUp);
   });
-  
+
   socket.on('misilCreated', (newMisil) => {
     misils[newMisil.id] = newMisil;
     misils[newMisil.id].raster = new paper.Raster(`textures/powerups/misilOn.png`);
@@ -105,6 +105,7 @@ window.onload = function() {
     misils[deletedMisil.id].raster.remove();
     delete misils[deletedMisil.id];
     console.log("Deleted Misil", deletedMisil);
+
   });
 
   socket.on('misilsUpdate', (newMisil) => {
@@ -175,16 +176,5 @@ window.onload = function() {
   } else {
     socket.emit('ignoreMe', true);      
   }
-
-
-
-
-
-
-
-
-
-
-
   paper.view.draw();
 }
