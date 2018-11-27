@@ -30,8 +30,8 @@
     },
     "wires":{
       "frequency": 1,
-      "sizeX": 90,
-      "sizeY": 90,
+      "sizeX": 55,
+      "sizeY": 55,
       "speed": 5,
       "blockCycles": 50,
       "max": 3
