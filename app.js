@@ -11,9 +11,10 @@ const PORT = process.env.PORT || 3000;
 http.listen(PORT, () => { console.log(`Running on port ${PORT}`); });
 
 // Game setup
-var game     = JSON.parse(fs.readFileSync("vars/exampleGame.json"));
+var game         = JSON.parse(fs.readFileSync("vars/defaultGame.json"));
+var game         = JSON.parse(fs.readFileSync("gameConfig.json"));
 var intervalTime = game.config.intervalTime;
-var gameId   = setInterval(() => {updateGame()}, intervalTime);
+var gameId       = setInterval(() => {updateGame()}, intervalTime);
 setInterval(() => {sendGame()}, intervalTime);
 setInterval(() => {repopulateTrash()}, 100);
 setInterval(() => {repopulatePowerUp()}, 500);
@@ -86,7 +87,6 @@ function repopulatePowerUp(){
 }
 
 function repopulateTrash() {    
-  console.log(game);  
   if(Math.random() < 0.1 && Object.keys(game.trashes).length < game.config.maxTrash) {
     var n = Math.floor(Math.random()*trashFrecSum);
     if(n == powerUpFrecSum) powerUpFrecSum - 0.001;
@@ -339,7 +339,7 @@ function checkCollisionsTrahses() {
       if (playerTrashOrPowerUpCollision(player,trash)) {
         io.emit("trashDeleted",trash);
         delete game.trashes[trashId];
-        player.points += game.trashTypes[trash.type].points;
+        player.points += game.trashTypes[trash.type].points || 0;
         switch (trash.type){
           case "wires":
             player.state = "blocked";

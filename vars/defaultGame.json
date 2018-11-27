@@ -1,0 +1,21 @@
+{
+  "players": {},
+  "trashes": {},
+  "powerUps": {},
+  "misils": {},
+  "trashTypes": {},
+  "vacuumTypes": {},
+  "powerUpTypes": {},
+  "config": {
+    "maxPowerUp": 8,
+    "maxTrash": 40,
+    "intervalTime": 25
+  },
+  "map": {
+    "id": 1,
+    "name": "dinningRoom",
+    "width": 1000,
+    "height": 600
+  },
+  "states": {}
+}
